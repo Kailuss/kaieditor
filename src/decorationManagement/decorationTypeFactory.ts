@@ -47,11 +47,8 @@ export class DecorationTypeFactory {
      */
     public clear(): void {
         this.cache.forEach(type => {
-            try {
-                type.dispose();
-            } catch (e) {
-                console.warn('[KaiEditor] Warning disposing decoration type:', e);
-            }
+            try       { type.dispose(); }
+            catch (e) { console.warn('[KaiEditor] Warning disposing decoration type:', e); }
         });
         this.cache.clear();
     }
