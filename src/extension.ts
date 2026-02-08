@@ -17,27 +17,27 @@ export function activate(context: vscode.ExtensionContext) {
 
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
-	console.log('[KaiEditor] 🚀 Extension activating...');
+	console.log('[KaiEditor] Extension activating...');
 
 	// Inicializar gestores
 	try {
 		configManager = new ConfigManager();
-		console.log('[KaiEditor] ✅ ConfigManager initialized');
+		console.log('[KaiEditor] ConfigManager initialized');
 		
 		commentDetector = new CommentDetector();
-		console.log('[KaiEditor] ✅ CommentDetector initialized');
+		console.log('[KaiEditor] CommentDetector initialized');
 		
 		decorationManager = new DecorationManager(configManager);
-		console.log('[KaiEditor] ✅ DecorationManager initialized');
+		console.log('[KaiEditor] DecorationManager initialized');
 	} catch (error) {
-		console.error('[KaiEditor] ❌ Error during initialization:', error);
+		console.error('[KaiEditor] Error during initialization:', error);
 		vscode.window.showErrorMessage(`KaiEditor failed to initialize: ${error}`);
 		return;
 	}
 
 	// Procesar el editor activo al iniciar
 	if (vscode.window.activeTextEditor) {
-		console.log('[KaiEditor] 📝 Processing active editor on startup');
+		console.log('[KaiEditor] Processing active editor on startup');
 		updateDecorations(vscode.window.activeTextEditor);
 	}
 
@@ -45,7 +45,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.window.onDidChangeActiveTextEditor(editor => {
 			if (editor) {
-				console.log('[KaiEditor] 👁️ Active editor changed:', editor.document.fileName);
+				console.log('[KaiEditor] Active editor changed:', editor.document.fileName);
 				updateDecorations(editor);
 			}
 		})
@@ -61,7 +61,7 @@ export function activate(context: vscode.ExtensionContext) {
 					clearTimeout(updateTimeout);
 				}
 				updateTimeout = setTimeout(() => {
-					console.log('[KaiEditor] 📝 Document changed, updating decorations');
+					console.log('[KaiEditor] Document changed, updating decorations');
 					updateDecorations(editor);
 				}, 300); // 300ms de debounce
 			}
@@ -94,7 +94,7 @@ export function activate(context: vscode.ExtensionContext) {
 			const currentState = config.get<boolean>('enabled', true);
 			config.update('enabled', !currentState, vscode.ConfigurationTarget.Workspace);
 			
-			const message = !currentState ? 'KaiEditor enabled ✅' : 'KaiEditor disabled ❌';
+			const message = !currentState ? 'KaiEditor enabled' : 'KaiEditor disabled';
 			console.log(`[KaiEditor] ${message}`);
 			vscode.window.showInformationMessage(message);
 		})
