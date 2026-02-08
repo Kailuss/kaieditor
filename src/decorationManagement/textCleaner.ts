@@ -9,11 +9,11 @@ export class TextCleaner {
      */
     public static cleanCommentText(text: string): string {
         return text
-            .replace(/^\/\/\s?/, '') // Comentarios de línea
-            .replace(/^\/\*\s?/, '') // Inicio de bloque
-            .replace(/\s?\*\/$/, '') // Fin de bloque
-            .replace(/^\*\s?/  , '') // Líneas dentro de bloque
-            .replace(/^#\s?/   , '') // Comentarios de línea con #
+            .replace(/^\/\/\s?/, '')       // Comentarios de línea
+            .replace(/^\/\*\*?\s?/, '')    // Inicio de bloque (/* o /**)
+            .replace(/\s?\*+\/$/, '')      // Fin de bloque (*/ o **/)
+            .replace(/^\s*\*\s?/, '')      // Líneas dentro de bloque (* )
+            .replace(/^#\s?/, '')           // Comentarios de línea con #
             .trim();
     }
 

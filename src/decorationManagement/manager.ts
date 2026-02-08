@@ -70,10 +70,8 @@ export class DecorationManager {
 
         // Aplicar decoraciones para bloques (incluye Documentation)
         if (multiLineComments.length > 0) {
-            const decoration = BlockDecorationApplier.apply(editor, multiLineComments, style, this.decorationFactory);
-            if (decoration) {
-                decorations.push(decoration);
-            }
+            const blockDecorations = BlockDecorationApplier.apply(editor, multiLineComments, style, this.decorationFactory);
+            decorations.push(...blockDecorations);
         }
 
         this.activeDecorations.set(editor.document.uri.toString(), decorations);

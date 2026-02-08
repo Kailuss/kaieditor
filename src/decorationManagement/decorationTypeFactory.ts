@@ -27,7 +27,7 @@ export class DecorationTypeFactory {
     }
 
     /**
-     * Crea decoración para bloques multilínea
+     * Crea decoración para bloques multilínea (texto)
      * @returns Tipo de decoración para bloques
      */
     public createBlockDecoration(): vscode.TextEditorDecorationType {
@@ -40,6 +40,26 @@ export class DecorationTypeFactory {
         const decorationType = vscode.window.createTextEditorDecorationType({
             textDecoration: 'none; display: none;',
             rangeBehavior: vscode.DecorationRangeBehavior.ClosedClosed
+        });
+
+        this.cache.set(key, decorationType);
+        return decorationType;
+    }
+
+    /**
+     * Crea decoración para el fondo de bloques multilínea
+     * @returns Tipo de decoración para fondo de bloques
+     */
+    public createBlockBackgroundDecoration(): vscode.TextEditorDecorationType {
+        const key = 'block-background';
+
+        if (this.cache.has(key)) {
+            return this.cache.get(key)!;
+        }
+
+        const decorationType = vscode.window.createTextEditorDecorationType({
+            rangeBehavior: vscode.DecorationRangeBehavior.ClosedClosed,
+            isWholeLine: false
         });
 
         this.cache.set(key, decorationType);
