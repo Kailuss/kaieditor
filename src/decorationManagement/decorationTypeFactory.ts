@@ -55,11 +55,4 @@ export class DecorationTypeFactory {
         });
         this.cache.clear();
     }
-
-    /**
-     * Obtiene el cache de tipos de decoración
-     */
-    public getCache(): Map<string, vscode.TextEditorDecorationType> {
-        return this.cache;
-    }
 }
