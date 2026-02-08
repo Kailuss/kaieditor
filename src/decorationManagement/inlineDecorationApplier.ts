@@ -31,7 +31,7 @@ export class InlineDecorationApplier {
             // Obtener colores según tipo y custom tag
             const isDocumentation = comment.isDocumentation || false;
             const colors = ColorManager.getColors(style, isDocumentation, comment.customTag);
-            
+
             decorations.push({
                 range: comment.range,
                 hoverMessage: '**Original Comment**\n```\n' + editor.document.getText(comment.range) + '\n```',
@@ -42,12 +42,12 @@ export class InlineDecorationApplier {
                         color: colors.textColor,
                         fontStyle: style.fontStyle,
                         fontWeight: style.fontWeight,
-                        textDecoration: `none; display: inline-block; border-radius: ${style.borderRadius}px; padding: ${style.inlinePaddingTop || '1px'} ${style.paddingHorizontal}px ${style.inlinePaddingBottom || '0.5px'} ${style.paddingHorizontal}px; opacity: ${style.opacity}; font-size: ${style.inlineFontSize || '0.64em'}; transition: opacity 0.3s; vertical-align: middle; margin: 0px; line-height: normal;`
+                        textDecoration: `none; display: inline-block; border-radius: ${style.borderRadius}px; padding: ${style.inlinePaddingTop} ${style.paddingHorizontal}px ${style.inlinePaddingBottom} ${style.paddingHorizontal}px; opacity: ${style.opacity}; font-size: ${style.inlineFontSize}; transition: opacity 0.3s; vertical-align: middle; margin: 0px; line-height: normal;`
                     }
                 }
             });
         });
-        
+
         if (decorations.length === 0) {
             return null;
         }

@@ -23,16 +23,16 @@ export class BlockDecorationApplier {
         factory: DecorationTypeFactory
     ): vscode.TextEditorDecorationType | null {
         const decorations: vscode.DecorationOptions[] = [];
-        
+
         comments.forEach(comment => {
             // Limpiar texto del bloque (maneja múltiples líneas)
             const cleanText = TextCleaner.cleanBlockText(comment.content);
             const formattedText = TextCleaner.formatLongText(cleanText, 120);
-            
+
             // Obtener colores según si es documentación
             const isDocumentation = comment.isDocumentation || false;
             const colors = ColorManager.getColors(style, isDocumentation);
-            
+
             // Decorar TODO el bloque (todas las líneas) con la caja en la primera línea
             decorations.push({
                 range: comment.range,
@@ -44,7 +44,7 @@ export class BlockDecorationApplier {
                         color: colors.textColor,
                         fontStyle: style.fontStyle,
                         fontWeight: style.fontWeight,
-                        textDecoration: `none; display: inline-block; border-radius: ${style.borderRadius}px; padding: ${style.inlinePaddingTop || '1px'} ${style.paddingHorizontal}px ${style.inlinePaddingBottom || '0.5px'} ${style.paddingHorizontal}px; opacity: ${style.opacity}; font-size: ${style.blockFontSize || '0.9em'}; transition: opacity 0.3s; vertical-align: top; margin: 0px 0px 0px 8px; line-height: normal;`
+                        textDecoration: `none; display: inline-block; border-radius: ${style.borderRadius}px; padding: ${style.inlinePaddingTop} ${style.paddingHorizontal}px ${style.inlinePaddingBottom} ${style.paddingHorizontal}px; opacity: ${style.opacity}; font-size: ${style.blockFontSize}; transition: opacity 0.3s; vertical-align: top; margin: 0px 0px 0px 8px; line-height: normal;`
                     }
                 }
             });
