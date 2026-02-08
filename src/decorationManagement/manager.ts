@@ -40,8 +40,15 @@ export class DecorationManager {
         }
 
         // Filtrar comentarios donde NO está el cursor ni hay selección
+        // Si el cursor está en cualquier línea que contiene el comentario, no decorar
         const commentsToDecorate = selection 
-            ? comments.filter(comment => !comment.range.intersection(selection))
+            ? comments.filter(comment => {
+                const cursorLine = selection.active.line;
+                const commentStartLine = comment.range.start.line;
+                const commentEndLine = comment.range.end.line;
+                // No decorar si el cursor está en alguna línea del comentario
+                return cursorLine < commentStartLine || cursorLine > commentEndLine;
+            })
             : comments;
 
         // Agrupar comentarios por tipo
