@@ -17,14 +17,14 @@ export class BlockDecorationApplier {
      * @returns Array de tipos de decoración aplicados
      */
     public static apply(
-        editor: vscode.TextEditor,
-        comments: DetectedComment[],
-        style: DecorationStyle,
-        factory: DecorationTypeFactory
+        editor   : vscode.TextEditor,
+        comments : DetectedComment[],
+        style    : DecorationStyle,
+        factory  : DecorationTypeFactory
     ): vscode.TextEditorDecorationType[] {
-        const backgroundDecorations: vscode.DecorationOptions[] = [];
-        const textDecorations: vscode.DecorationOptions[] = [];
-        const hideDecorations: vscode.DecorationOptions[] = [];
+        const backgroundDecorations : vscode.DecorationOptions[] = [];
+        const textDecorations       : vscode.DecorationOptions[] = [];
+        const hideDecorations       : vscode.DecorationOptions[] = [];
 
         comments.forEach(comment => {
             // Obtener colores según si es documentación

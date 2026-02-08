@@ -11,26 +11,27 @@ export class ColorManager {
      * @returns Color de fondo para el tag
      */
     public static getTagColor(style: DecorationStyle, tag?: CustomTag): string {
-        if (!tag || tag === CustomTag.None) {
-            return style.backgroundColor;
-        }
 
+        // Si no hay tag o es None, usar el color de fondo general
+        if (!tag || tag === CustomTag.None) { return style.backgroundColor; }
+
+        // Obtener colores específicos para tags personalizados
         const tagColors = style.tagColors || {};
 
-        switch (tag) {
-            case CustomTag.Important:
-                return tagColors.important || style.backgroundColor;
-            case CustomTag.Success:
-                return tagColors.success || style.backgroundColor;
-            case CustomTag.Warning:
-                return tagColors.warning || style.backgroundColor;
-            case CustomTag.Info:
-                return tagColors.info || style.backgroundColor;
-            case CustomTag.Debug:
-                return tagColors.debug || style.backgroundColor;
-            default:
-                return style.backgroundColor;
-        }
+        // Si no hay configuración de colores por tag, usar el color de fondo general
+        if (!style.tagColors) { return style.backgroundColor; }
+
+        // Mapeo de tags a colores, con fallback al color de fondo general
+        const colorMap: Record<CustomTag, string | undefined> = {
+            [CustomTag.None]      : undefined,
+            [CustomTag.Important] : tagColors.important,
+            [CustomTag.Success]   : tagColors.success,
+            [CustomTag.Warning]   : tagColors.warning,
+            [CustomTag.Info]      : tagColors.info,
+            [CustomTag.Debug]     : tagColors.debug
+        };
+
+        return colorMap[tag] || style.backgroundColor;
     }
 
     /**
@@ -41,24 +42,28 @@ export class ColorManager {
      * @returns Objeto con backgroundColor, textColor y borderColor
      */
     public static getColors(
-        style: DecorationStyle, 
-        isDocumentation: boolean, 
-        customTag?: CustomTag
-    ): { backgroundColor: string; textColor: string; borderColor: string } {
+        style           : DecorationStyle, 
+        isDocumentation : boolean, 
+        customTag?      : CustomTag
+    ): {
+        backgroundColor : string;
+        textColor       : string;
+        borderColor     : string
+    } {
         const baseColor = ColorManager.getTagColor(style, customTag);
 
         if (isDocumentation && style.docColors) {
             return {
-                backgroundColor: style.docColors.backgroundColor || baseColor,
-                textColor: style.docColors.textColor || style.textColor,
-                borderColor: style.docColors.borderColor || style.borderColor
+                backgroundColor : style.docColors.backgroundColor || baseColor,
+                textColor       : style.docColors.textColor       || style.textColor,
+                borderColor     : style.docColors.borderColor     || style.borderColor
             };
         }
 
         return {
-            backgroundColor: baseColor,
-            textColor: style.textColor,
-            borderColor: style.borderColor
+            backgroundColor : baseColor,
+            textColor       : style.textColor,
+            borderColor     : style.borderColor
         };
     }
 }

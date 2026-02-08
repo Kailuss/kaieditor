@@ -77,36 +77,18 @@ export interface DecorationStyle {
     inlinePaddingBottom?    : string; // Padding bottom para comentarios inline
     blockFontSize?          : string; // Tamaño de fuente para bloques de documentación
     blockPaddingMultiplier? : number; // Multiplicador para padding vertical en bloques de documentación (ej: 2 para el doble del padding normal)
-    // Colores para custom tags
-    tagColors?: {
-        important?: string;    // //! - Rojo
-        success?: string;      // //· - Verde
-        warning?: string;      // //? - Amarillo
-        info?: string;         // //@ - Azul
-        debug?: string;        // //# - Morado
+    tagColors?: {                     // Colores para custom tags
+        important? : string; // //! - Rojo
+        success?   : string; // //· - Verde
+        warning?   : string; // //? - Amarillo
+        info?      : string; // //@ - Azul
+        debug?     : string; // //# - Morado
     };
-    // Colores para comentarios de documentación
-    docColors?: {
+    docColors?: {                     // Colores específicos para comentarios de documentación
         backgroundColor?: string;
         borderColor?: string;
         textColor?: string;
     };
-}
-
-/**
- * Configuración de estilos para las cajas de comentarios (legacy)
- * @deprecated Use DecorationStyle instead
- */
-export interface CommentBoxStyle {
-    backgroundColor       : string; // Color de fondo de la caja
-    textColor             : string; // Color del texto
-    borderColor           : string; // Color del borde
-    borderWidth           : string; // Ancho del borde
-    borderRadius          : string; // Radio del borde (esquinas redondeadas)
-    padding               : string; // Padding interno
-    fontFamily            : string; // Fuente del texto
-    fontSize              : string; // Tamaño de fuente
-    fontWeight            : string; // Peso de fuente
 }
 
 /**
@@ -119,22 +101,4 @@ export interface KaiEditorConfig {
     singleLineStyle       : DecorationStyle;     // Estilos para comentarios de una línea
     multiLineStyle        : DecorationStyle;     // Estilos para comentarios multilínea
     inlineStyle           : DecorationStyle;     // Estilos para comentarios inline
-}
-
-/**
- * Rango de comentario con información de tipo
- */
-export interface CommentRange {
-    range: vscode.Range;
-    type: 'line' | 'block' | 'inline';
-    text: string;
-    language: string;
-}
-
-/**
- * Opciones de decoración procesadas para VS Code
- */
-export interface DecorationOptions {
-    decorationType        : vscode.TextEditorDecorationType; // Tipo de decoración de VS Code
-    rangeOptions          : vscode.DecorationOptions[];      // Opciones de rango de decoración
 }
