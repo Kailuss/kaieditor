@@ -59,7 +59,7 @@ function criticalFunction() {
 
 //@ INFO: Los custom tags funcionan así:
 //! //! - Importante (Rojo)
-//* //* - Éxito (Verde)
+//· //· - Éxito (Verde)
 //? //? - Advertencia (Amarillo)
 //@ //@ - Info (Azul)
 //# //# - Debug (Morado)
