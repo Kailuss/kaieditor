@@ -41,12 +41,12 @@ export class ConfigManager {
     private loadDecorationStyle(config: vscode.WorkspaceConfiguration): DecorationStyle {
         return {
             backgroundColor        : config.get<string>('backgroundColor', '#071229'),
-            textColor              : config.get<string>('textColor', '#e6f0ff'),
+            textColor              : config.get<string>('textColor', '#000'),
             borderColor            : config.get<string>('borderColor', '#203040'),
             accentColor            : config.get<string>('accentColor', '#39a0c8'),
             borderRadius           : config.get<number>('borderRadius', 10),
             paddingVertical        : config.get<number>('paddingVertical', 1),
-            paddingHorizontal      : config.get<number>('paddingHorizontal', 5),
+            paddingHorizontal      : config.get<number>('paddingHorizontal', 4),
             fontStyle              : config.get<string>('fontStyle', 'normal'),
             fontWeight             : config.get<string>('fontWeight', '400'),
             opacity                : config.get<number>('opacity', 0.92),

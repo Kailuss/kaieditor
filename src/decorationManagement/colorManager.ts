@@ -16,18 +16,18 @@ export class ColorManager {
         }
 
         const tagColors = style.tagColors || {};
-        
+
         switch (tag) {
             case CustomTag.Important:
-                return tagColors.important || '#8b1e1e';  // Rojo oscuro
+                return tagColors.important || style.backgroundColor;
             case CustomTag.Success:
-                return tagColors.success || '#1e5e1e';    // Verde oscuro
+                return tagColors.success || style.backgroundColor;
             case CustomTag.Warning:
-                return tagColors.warning || '#7a5e1e';    // Amarillo/Naranja oscuro
+                return tagColors.warning || style.backgroundColor;
             case CustomTag.Info:
-                return tagColors.info || '#1e4e7a';       // Azul oscuro
+                return tagColors.info || style.backgroundColor;
             case CustomTag.Debug:
-                return tagColors.debug || '#5e1e7a';      // Morado oscuro
+                return tagColors.debug || style.backgroundColor;
             default:
                 return style.backgroundColor;
         }
@@ -46,12 +46,12 @@ export class ColorManager {
         customTag?: CustomTag
     ): { backgroundColor: string; textColor: string; borderColor: string } {
         const baseColor = ColorManager.getTagColor(style, customTag);
-        
-        if (isDocumentation) {
+
+        if (isDocumentation && style.docColors) {
             return {
-                backgroundColor: style.docColors?.backgroundColor || baseColor,
-                textColor: style.docColors?.textColor || style.textColor,
-                borderColor: style.docColors?.borderColor || style.borderColor
+                backgroundColor: style.docColors.backgroundColor || baseColor,
+                textColor: style.docColors.textColor || style.textColor,
+                borderColor: style.docColors.borderColor || style.borderColor
             };
         }
 
