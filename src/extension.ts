@@ -81,6 +81,10 @@ export function activate(context: vscode.ExtensionContext) {
 	// Actualizar decoraciones cuando cambia la configuración
 	context.subscriptions.push(
 		configManager.onConfigChange(() => {
+			console.log('[KaiEditor] 🔧 Configuration changed, refreshing all decorations');
+			// Limpiar todas las decoraciones primero para forzar recreación
+			decorationManager.clearAllDecorations();
+			// Actualizar editor activo con nueva configuración
 			if (vscode.window.activeTextEditor) {
 				updateDecorations(vscode.window.activeTextEditor);
 			}

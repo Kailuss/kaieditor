@@ -8,62 +8,38 @@ export class DecorationTypeFactory {
 
     /**
      * Crea una decoración para comentarios inline (después de código)
+     * NO cachea porque los estilos pueden cambiar
      * @returns Tipo de decoración para inline
      */
     public createInlineDecoration(): vscode.TextEditorDecorationType {
-        const key = 'inline';
-
-        if (this.cache.has(key)) {
-            return this.cache.get(key)!;
-        }
-
-        const decorationType = vscode.window.createTextEditorDecorationType({
+        return vscode.window.createTextEditorDecorationType({
             textDecoration: 'none; display: none;',
             rangeBehavior: vscode.DecorationRangeBehavior.ClosedClosed
         });
-
-        this.cache.set(key, decorationType);
-        return decorationType;
     }
 
     /**
      * Crea decoración para bloques multilínea (texto)
+     * NO cachea porque los estilos pueden cambiar
      * @returns Tipo de decoración para bloques
      */
     public createBlockDecoration(): vscode.TextEditorDecorationType {
-        const key = 'block';
-
-        if (this.cache.has(key)) {
-            return this.cache.get(key)!;
-        }
-
-        const decorationType = vscode.window.createTextEditorDecorationType({
+        return vscode.window.createTextEditorDecorationType({
             textDecoration: 'none; display: none;',
             rangeBehavior: vscode.DecorationRangeBehavior.ClosedClosed
         });
-
-        this.cache.set(key, decorationType);
-        return decorationType;
     }
 
     /**
      * Crea decoración para el fondo de bloques multilínea
+     * NO cachea porque los estilos pueden cambiar
      * @returns Tipo de decoración para fondo de bloques
      */
     public createBlockBackgroundDecoration(): vscode.TextEditorDecorationType {
-        const key = 'block-background';
-
-        if (this.cache.has(key)) {
-            return this.cache.get(key)!;
-        }
-
-        const decorationType = vscode.window.createTextEditorDecorationType({
+        return vscode.window.createTextEditorDecorationType({
             rangeBehavior: vscode.DecorationRangeBehavior.ClosedClosed,
             isWholeLine: false
         });
-
-        this.cache.set(key, decorationType);
-        return decorationType;
     }
 
     /**

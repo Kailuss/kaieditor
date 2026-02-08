@@ -44,7 +44,7 @@ export class ConfigManager {
             textColor              : config.get<string>('textColor', '#000'),
             borderColor            : config.get<string>('borderColor', '#203040'),
             accentColor            : config.get<string>('accentColor', '#39a0c8'),
-            borderRadius           : config.get<number>('borderRadius', 10),
+            borderRadius           : config.get<number>('borderRadius', 50),
             paddingVertical        : config.get<number>('paddingVertical', 1),
             paddingHorizontal      : config.get<number>('paddingHorizontal', 4),
             fontStyle              : config.get<string>('fontStyle', 'normal'),
