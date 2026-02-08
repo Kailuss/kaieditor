@@ -4,23 +4,157 @@
   "description": "Turns code comments into styled visual blocks directly inside the editor, without changing the source code.",
   "version": "0.0.1",
   "engines": {
-    "vscode": "^1.109.0"
+    "vscode": "^1.108.2"
   },
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "kaieditor.helloWorld",
-        "title": "Hello World"
+        "title": "KaiEditor: Hello World"
+      },
+      {
+        "command": "kaieditor.toggle",
+        "title": "KaiEditor: Toggle Comment Boxes"
+      },
+      {
+        "command": "kaieditor.refresh",
+        "title": "KaiEditor: Refresh Decorations"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "KaiEditor",
+      "properties": {
+        "kaieditor.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable or disable KaiEditor comment box transformations"
+        },
+        "kaieditor.enabledLanguages": {
+          "type": "array",
+          "default": ["javascript", "typescript", "python", "rust", "go"],
+          "description": "List of languages where comment boxes will be shown",
+          "items": {
+            "type": "string"
+          }
+        },
+        "kaieditor.backgroundColor": {
+          "type": "string",
+          "default": "#2e3440",
+          "description": "Background color for comment boxes"
+        },
+        "kaieditor.textColor": {
+          "type": "string",
+          "default": "#eceff4",
+          "description": "Text color for comment boxes"
+        },
+        "kaieditor.borderColor": {
+          "type": "string",
+          "default": "#4c566a",
+          "description": "Border color for comment boxes"
+        },
+        "kaieditor.accentColor": {
+          "type": "string",
+          "default": "#88c0d0",
+          "description": "Accent color for block comment left border"
+        },
+        "kaieditor.borderRadius": {
+          "type": "number",
+          "default": 6,
+          "minimum": 0,
+          "maximum": 20,
+          "description": "Border radius in pixels"
+        },
+        "kaieditor.paddingVertical": {
+          "type": "number",
+          "default": 3,
+          "minimum": 0,
+          "maximum": 20,
+          "description": "Vertical padding in pixels"
+        },
+        "kaieditor.paddingHorizontal": {
+          "type": "number",
+          "default": 10,
+          "minimum": 0,
+          "maximum": 40,
+          "description": "Horizontal padding in pixels"
+        },
+        "kaieditor.fontStyle": {
+          "type": "string",
+          "enum": ["normal", "italic"],
+          "default": "normal",
+          "description": "Font style for comment text"
+        },
+        "kaieditor.fontWeight": {
+          "type": "string",
+          "enum": ["400", "500", "600"],
+          "default": "400",
+          "description": "Font weight for comment text"
+        },
+        "kaieditor.opacity": {
+          "type": "number",
+          "default": 0.95,
+          "minimum": 0.1,
+          "maximum": 1.0,
+          "description": "Opacity level for comment boxes"
+        },
+        "kaieditor.singleLineStyle.backgroundColor": {
+          "type": "string",
+          "default": "#2d3748",
+          "description": "[Legacy] Background color for single-line comment boxes"
+        },
+        "kaieditor.singleLineStyle.textColor": {
+          "type": "string",
+          "default": "#e2e8f0",
+          "description": "[Legacy] Text color for single-line comment boxes"
+        },
+        "kaieditor.singleLineStyle.borderColor": {
+          "type": "string",
+          "default": "#4a5568",
+          "description": "[Legacy] Border color for single-line comment boxes"
+        },
+        "kaieditor.multiLineStyle.backgroundColor": {
+          "type": "string",
+          "default": "#1a365d",
+          "description": "[Legacy] Background color for multi-line comment boxes"
+        },
+        "kaieditor.multiLineStyle.textColor": {
+          "type": "string",
+          "default": "#bee3f8",
+          "description": "[Legacy] Text color for multi-line comment boxes"
+        },
+        "kaieditor.multiLineStyle.borderColor": {
+          "type": "string",
+          "default": "#2c5282",
+          "description": "[Legacy] Border color for multi-line comment boxes"
+        },
+        "kaieditor.inlineStyle.backgroundColor": {
+          "type": "string",
+          "default": "#44337a",
+          "description": "[Legacy] Background color for inline comment boxes"
+        },
+        "kaieditor.inlineStyle.textColor": {
+          "type": "string",
+          "default": "#e9d8fd",
+          "description": "[Legacy] Text color for inline comment boxes"
+        },
+        "kaieditor.inlineStyle.borderColor": {
+          "type": "string",
+          "default": "#6b46c1",
+          "description": "[Legacy] Border color for inline comment boxes"
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run package",
+    "close-dev-host": "node ./scripts/close-dev-host.js",
     "compile": "npm run check-types && npm run lint && node esbuild.js",
     "watch": "npm-run-all -p watch:*",
     "watch:esbuild": "node esbuild.js --watch",

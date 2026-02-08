@@ -1,35 +1,109 @@
-# kaieditor README
+# KaiEditor - Visual Comment Boxes
 
-This is the README for your extension "kaieditor". After writing up a brief description, we recommend including the following sections.
+Transform your code comments into elegant, styled visual boxes directly in the editor using pure CSS - without modifying your source code!
 
-## Features
+## ✨ Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- **🎨 CSS-Styled Comment Boxes**: Transforms comments into beautiful visual boxes with customizable colors, borders, and padding
+- **🔄 Non-Invasive**: Your source code remains unchanged - decorations are purely visual
+- **💎 Multiple Styles**: Different styles for inline, single-line, and multi-line comments
+- **⚙️ Fully Customizable**: Adjust colors, borders, padding, opacity, fonts, and more
+- **🌐 Multi-Language Support**: Works with JavaScript, TypeScript, Python, Rust, and Go
 
-For example if there is an image subfolder under your extension project workspace:
+### Visual Examples
 
-\!\[feature X\]\(images/feature-x.png\)
+**Inline Comments** - Appear as styled boxes next to code:
+```javascript
+const x = 10;  // Variable for counter  ← Styled box
+```
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+**Block Comments** - Multi-line comments with accent border:
+```javascript
+/*
+ * This function processes data
+ * and returns a formatted object
+ */
+```
 
-## Requirements
+## 🚀 Quick Start
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+1. Install KaiEditor
+2. Open any supported file (`.js`, `.ts`, `.py`, `.rs`, `.go`)
+3. Your comments automatically transform into styled boxes!
 
-## Extension Settings
+## ⚙️ Configuration
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+Customize the appearance in VS Code Settings (`Ctrl+,` or `Cmd+,`):
 
-For example:
+### Core Style Settings
 
-This extension contributes the following settings:
+- `kaieditor.backgroundColor` - Background color for comment boxes (default: `#2e3440`)
+- `kaieditor.textColor` - Text color (default: `#eceff4`)
+- `kaieditor.borderColor` - Border color (default: `#4c566a`)
+- `kaieditor.accentColor` - Accent color for block comment left border (default: `#88c0d0`)
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+### Layout Settings
 
-## Known Issues
+- `kaieditor.borderRadius` - Border radius in pixels (0-20, default: `6`)
+- `kaieditor.paddingVertical` - Vertical padding in pixels (0-20, default: `3`)
+- `kaieditor.paddingHorizontal` - Horizontal padding in pixels (0-40, default: `10`)
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+### Typography Settings
+
+- `kaieditor.fontStyle` - Font style: `normal` or `italic` (default: `normal`)
+- `kaieditor.fontWeight` - Font weight: `400`, `500`, or `600` (default: `400`)
+- `kaieditor.opacity` - Opacity level (0.1-1.0, default: `0.95`)
+
+### General Settings
+
+- `kaieditor.enabled` - Enable/disable the extension (default: `true`)
+- `kaieditor.enabledLanguages` - Languages to process (default: `["javascript", "typescript", "python", "rust", "go"]`)
+
+## 🎨 Preset Styles
+
+### Nord Theme (Default)
+```json
+{
+  "kaieditor.backgroundColor": "#3b4252",
+  "kaieditor.textColor": "#eceff4",
+  "kaieditor.borderColor": "#4c566a",
+  "kaieditor.accentColor": "#88c0d0",
+  "kaieditor.borderRadius": 6,
+  "kaieditor.opacity": 0.9
+}
+```
+
+### GitHub Style
+```json
+{
+  "kaieditor.backgroundColor": "#0d1117",
+  "kaieditor.textColor": "#c9d1d9",
+  "kaieditor.borderColor": "#30363d",
+  "kaieditor.accentColor": "#58a6ff",
+  "kaieditor.borderRadius": 4,
+  "kaieditor.paddingVertical": 2,
+  "kaieditor.paddingHorizontal": 8
+}
+```
+
+### Minimalist
+```json
+{
+  "kaieditor.backgroundColor": "#1e1e1e",
+  "kaieditor.textColor": "#888888",
+  "kaieditor.borderColor": "#333333",
+  "kaieditor.accentColor": "#555555",
+  "kaieditor.borderRadius": 3,
+  "kaieditor.paddingVertical": 1,
+  "kaieditor.paddingHorizontal": 6,
+  "kaieditor.opacity": 0.85
+}
+```
+
+## 📋 Commands
+
+- `KaiEditor: Toggle Comment Boxes` - Enable/disable comment boxes
+- `KaiEditor: Refresh Decorations` - Manually refresh decorations
 
 ## Release Notes
 
