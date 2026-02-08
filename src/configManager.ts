@@ -40,32 +40,32 @@ export class ConfigManager {
      */
     private loadDecorationStyle(config: vscode.WorkspaceConfiguration): DecorationStyle {
         return {
-            backgroundColor        : config.get<string>('backgroundColor', '#2e3440'),
-            textColor              : config.get<string>('textColor', '#eceff4'),
-            borderColor            : config.get<string>('borderColor', '#4c566a'),
-            accentColor            : config.get<string>('accentColor', '#88c0d0'),
-            borderRadius           : config.get<number>('borderRadius', 2),
+            backgroundColor        : config.get<string>('backgroundColor', '#071229'),
+            textColor              : config.get<string>('textColor', '#e6f0ff'),
+            borderColor            : config.get<string>('borderColor', '#203040'),
+            accentColor            : config.get<string>('accentColor', '#39a0c8'),
+            borderRadius           : config.get<number>('borderRadius', 10),
             paddingVertical        : config.get<number>('paddingVertical', 1),
-            paddingHorizontal      : config.get<number>('paddingHorizontal', 8),
+            paddingHorizontal      : config.get<number>('paddingHorizontal', 5),
             fontStyle              : config.get<string>('fontStyle', 'normal'),
             fontWeight             : config.get<string>('fontWeight', '400'),
-            opacity                : config.get<number>('opacity', 0.95),
+            opacity                : config.get<number>('opacity', 0.92),
             inlineFontSize         : config.get<string>('inlineFontSize', '0.64em'),
             inlinePaddingTop       : config.get<string>('inlinePaddingTop', '1px'),
             inlinePaddingBottom    : config.get<string>('inlinePaddingBottom', '0.5px'),
             blockFontSize          : config.get<string>('blockFontSize', '0.9em'),
             blockPaddingMultiplier : config.get<number>('blockPaddingMultiplier', 2),
             tagColors              : {
-                important : config.get<string>('tagColors.important', '#8b1e1e99'),
-                success   : config.get<string>('tagColors.success'  , '#1e5e1e99'),
-                warning   : config.get<string>('tagColors.warning'  , '#7a5e1e99'),
-                info      : config.get<string>('tagColors.info'     , '#1e4e7a99'),
-                debug     : config.get<string>('tagColors.debug'    , '#5e1a7a99')
+            important : config.get<string>('tagColors.important', '#ff6b6b99'),
+            success   : config.get<string>('tagColors.success'  , '#49c78a99'),
+            warning   : config.get<string>('tagColors.warning'  , '#ffb86b99'),
+            info      : config.get<string>('tagColors.info'     , '#74b3ff99'),
+            debug     : config.get<string>('tagColors.debug'    , '#b084ff99')
             },
             docColors              : {
-                backgroundColor : config.get<string>('docColors.backgroundColor', '#1a2332'),
-                borderColor     : config.get<string>('docColors.borderColor', '#3a4a5a'),
-                textColor       : config.get<string>('docColors.textColor', '#a0b0c0')
+            backgroundColor : config.get<string>('docColors.backgroundColor', '#061425'),
+            borderColor     : config.get<string>('docColors.borderColor', '#1b2b3a'),
+            textColor       : config.get<string>('docColors.textColor', '#bcd6ee')
             }
         };
     }
