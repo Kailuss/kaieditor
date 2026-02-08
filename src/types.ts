@@ -40,13 +40,13 @@ export enum CustomTag {
  * Representa un comentario detectado en el código
  */
 export interface DetectedComment {
-    range                : vscode.Range;         // Rango del comentario en el documento
-    content              : string;              // Contenido del comentario sin los delimitadores
-    type                 : CommentType;         // Tipo de comentario
-    language             : SupportedLanguage;   // Lenguaje del documento
-    isAfterCode          : boolean;             // Indica si el comentario está después de código (inline)
-    customTag?           : CustomTag;           // Tag personalizado para comentarios de línea
-    isDocumentation?     : boolean;             // Indica si es un comentario de documentación JSDoc/etc
+    range                : vscode.Range;       // Rango del comentario en el documento
+    content              : string;            // Contenido del comentario sin los delimitadores
+    type                 : CommentType;       // Tipo de comentario
+    language             : SupportedLanguage; // Lenguaje del documento
+    isAfterCode          : boolean;           // Indica si el comentario está después de código (inline)
+    customTag?           : CustomTag;         // Tag personalizado para comentarios de línea
+    isDocumentation?     : boolean;           // Indica si es un comentario de documentación JSDoc/etc
 }
 
 /**
