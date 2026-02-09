@@ -69,8 +69,13 @@ Todas las configuraciones están completamente conectadas y funcionales. Se apli
 | Configuración | Tipo | Default | Rango | Descripción |
 |--------------|------|---------|-------|-------------|
 | `kaieditor.showIcons` | boolean | `true` | - | Mostrar iconos SVG antes de comentarios con tags |
-| `kaieditor.iconSize` | number | `12` | 10-18 | Tamaño de los iconos en píxeles |
-| `kaieditor.iconMargin` | string | `0 4px 0 0` | - | Margen CSS de los iconos |
+
+**Nota sobre iconos:**
+- **Tamaño fijo**: Los iconos son siempre de **16px** para garantizar consistencia visual
+- **Margen automático**: El margen se calcula dinámicamente según el contexto:
+  - **Comentarios inline**: `-16px` (solapamiento perfecto con el fondo)
+  - **Comentarios block**: `-20px` (espacio extra para padding del contenedor)
+- Los iconos se posicionan usando `position: absolute` con `z-index: 1`
 
 ## Arquitectura del Sistema de Configuración
 

@@ -29,11 +29,14 @@ export enum CommentType {
  */
 export enum CustomTag {
     None      = 'none',
-    Important = '!', //! Rojo
-    Success   = '·', //· Verde
-    Warning   = '?', //? Amarillo
-    Info      = '@', //@ Azul
-    Debug     = '#'  //# Morado
+    Important = '^',
+    Pending   = '~',
+    Active    = '·',
+    Completed = ':',
+    Conflict  = '?',
+    Warning   = '!',
+    Info      = '>',
+    Debug     = '#'
 }
 
 /**
@@ -83,17 +86,19 @@ export interface DecorationStyle {
     inlinePaddingTop        : string; // Padding top para comentarios inline
     inlinePaddingBottom     : string; // Padding bottom para comentarios inline
     blockFontSize           : string; // Tamaño de fuente para bloques multi-línea
-    blockPaddingMultiplier  : number; // Multiplicador para padding vertical en bloques
-    
+
     // Colores para custom tags
     tagColors: {
-        important : string; // //! - Rojo
-        success   : string; // //· - Verde
-        warning   : string; // //? - Amarillo
-        info      : string; // //@ - Azul
-        debug     : string; // //# - Morado
+        important : string;
+        completed : string;
+        warning   : string;
+        info      : string;
+        debug     : string;
+        pending   : string;
+        active    : string;
+        conflict  : string;
     };
-    
+
     // Colores específicos para comentarios de documentación
     docColors: {
         backgroundColor : string;
@@ -110,6 +115,5 @@ export interface KaiEditorConfig {
     enabledLanguages : SupportedLanguage[]; // Lenguajes habilitados para transformación
     decorationStyle  : DecorationStyle;     // Estilo de decoración unificado para todos los comentarios
     showIcons        : boolean;             // Mostrar iconos antes de comentarios con tags
-    iconSize         : number;              // Tamaño de los iconos en píxeles
-    iconMargin       : string;              // Margen CSS de los iconos
+    iconSize         : number;              // Tamaño de los iconos en píxeles (fijo: 16px)
 }

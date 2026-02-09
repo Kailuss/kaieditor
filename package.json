@@ -68,7 +68,7 @@
           "type": "number",
           "default": 16,
           "minimum": 0,
-          "maximum": 20,
+          "maximum": 50,
           "description": "Border radius in pixels"
         },
         "kaieditor.paddingVertical": {
@@ -106,30 +106,23 @@
         },
         "kaieditor.inlineFontSize": {
           "type": "string",
-          "default": "0.64em",
-          "description": "Font size for inline comments (e.g., '0.64em', '12px')"
+          "default": "0.75em",
+          "description": "Font size for inline comments (e.g., '0.75em', '12px')"
         },
         "kaieditor.inlinePaddingTop": {
           "type": "string",
-          "default": "1px",
+          "default": "1.5px",
           "description": "Top padding for inline comments"
         },
         "kaieditor.inlinePaddingBottom": {
           "type": "string",
-          "default": "0.5px",
+          "default": "0.8px",
           "description": "Bottom padding for inline comments"
         },
         "kaieditor.blockFontSize": {
           "type": "string",
-          "default": "0.9em",
+          "default": "0.75em",
           "description": "Font size for block comments (e.g., '0.9em', '14px')"
-        },
-        "kaieditor.blockPaddingMultiplier": {
-          "type": "number",
-          "default": 2,
-          "minimum": 1,
-          "maximum": 5,
-          "description": "Multiplier for vertical padding in block comments"
         },
         "kaieditor.tagColors.important": {
           "type": "string",
@@ -158,12 +151,12 @@
         },
         "kaieditor.docColors.backgroundColor": {
           "type": "string",
-          "default": "#061425",
+          "default": "#16161d99",
           "description": "Background color for documentation comments (JSDoc, etc.)"
         },
         "kaieditor.docColors.borderColor": {
           "type": "string",
-          "default": "#1b2b3a",
+          "default": "#61c7fa",
           "description": "Border color for documentation comments"
         },
         "kaieditor.docColors.textColor": {
@@ -175,18 +168,6 @@
           "type": "boolean",
           "default": true,
           "description": "Mostrar iconos antes del texto de comentarios con tags personalizados"
-        },
-        "kaieditor.iconSize": {
-          "type": "number",
-          "default": 12,
-          "minimum": 10,
-          "maximum": 18,
-          "description": "Tamaño de los iconos en píxeles"
-        },
-        "kaieditor.iconMargin": {
-          "type": "string",
-          "default": "0 4px 0 0",
-          "description": "Margen de los iconos (formato CSS: top right bottom left)"
         }
       }
     }

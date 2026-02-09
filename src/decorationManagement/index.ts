@@ -11,13 +11,10 @@
  * - manager: Gestor principal que coordina todos los módulos
  */
 
-export { TextCleaner } from './textCleaner';
-export { ColorManager } from './colorManager';
-export { DecorationTypeFactory } from './decorationTypeFactory';
+export { TextCleaner }                                  from './textCleaner';
+export { ColorManager }                                 from './colorManager';
+export { DecorationTypeFactory }                        from './decorationTypeFactory';
 export { getIconUri, clearIconCache, getIconCacheSize } from './iconManager';
-export { InlineDecorationApplier } from './inlineDecorationApplier';
-export { BlockDecorationApplier } from './blockDecorationApplier';
-export { DecorationManager } from './manager';
-
-// Re-export del manager principal para compatibilidad
-export { DecorationManager as default } from './manager';
+export { InlineDecorationApplier }                      from './inlineDecorationApplier';
+export { BlockDecorationApplier }                       from './blockDecorationApplier';
+export { DecorationManager }                            from './manager';

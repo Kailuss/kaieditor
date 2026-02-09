@@ -20,23 +20,21 @@ export class TagDetector {
         if (content.length === 0) {
             return CustomTag.None;
         }
-        
+
         const firstChar = content[0];
-        
-        switch (firstChar) {
-            case '!':
-                return CustomTag.Important;
-            case '·':
-                return CustomTag.Success;
-            case '?':
-                return CustomTag.Warning;
-            case '@':
-                return CustomTag.Info;
-            case '#':
-                return CustomTag.Debug;
-            default:
-                return CustomTag.None;
-        }
+
+        const tagMap: Record<string, CustomTag> = {
+            '^': CustomTag.Important,
+            '~': CustomTag.Pending,
+            '·': CustomTag.Active,
+            ':': CustomTag.Completed,
+            '?': CustomTag.Conflict,
+            '!': CustomTag.Warning,
+            '>': CustomTag.Info,
+            '#': CustomTag.Debug
+        };
+
+        return tagMap[firstChar] ?? CustomTag.None;
     }
 
     /**

@@ -82,7 +82,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		configManager.onConfigChange(() => {
 			console.log('[KaiEditor] 🔧 Configuration changed, refreshing all decorations');
-			// Limpiar caché de iconos para que los cambios en iconSize/showIcons/iconMargin tengan efecto
+			// Limpiar caché de iconos para que los cambios en showIcons tengan efecto
 			clearIconCache();
 			console.log('[KaiEditor] 🗑️ Icon cache cleared');
 			// Limpiar todas las decoraciones primero para forzar recreación

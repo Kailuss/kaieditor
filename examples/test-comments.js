@@ -58,6 +58,31 @@ function criticalFunction() {
 }
 
 //@ INFO: Los custom tags funcionan así:
+
+//^ Comentario IMPORTANTE usando símbolo ^
+const importantValue = 42;
+
+//~ Comentario PENDIENTE usando símbolo ~
+const pendingTask = "Por hacer";
+
+//· Comentario ACTIVO usando símbolo ·
+const activeProcess = true;
+
+//: Comentario COMPLETADO usando símbolo :
+const completedTask = "Finalizado";
+
+//? Comentario CONFLICTO usando símbolo ?
+const conflictingValue = null;
+
+//! Comentario WARNING usando símbolo !
+const warningFlag = false;
+
+//> Comentario INFO usando símbolo >
+const infoMessage = "Información útil";
+
+//# Comentario DEBUG usando símbolo #
+const debugMode = true;
+
 //! Importante (Rojo)
 //· Éxito (Verde)
 //? //? - Advertencia (Amarillo)
