@@ -61,7 +61,7 @@ export class DecorationManager {
 
         // Aplicar decoraciones para comentarios inline
         if (inlineComments.length > 0) {
-            const decoration = InlineDecorationApplier.apply(editor, inlineComments, style, this.decorationFactory);
+            const decoration = InlineDecorationApplier.apply(editor, inlineComments, style, this.decorationFactory, this.configManager);
             if (decoration) {
                 decorations.push(decoration);
             }
@@ -69,7 +69,7 @@ export class DecorationManager {
 
         // Aplicar decoraciones para comentarios de línea
         if (singleLineComments.length > 0) {
-            const decoration = InlineDecorationApplier.apply(editor, singleLineComments, style, this.decorationFactory);
+            const decoration = InlineDecorationApplier.apply(editor, singleLineComments, style, this.decorationFactory, this.configManager);
             if (decoration) {
                 decorations.push(decoration);
             }
@@ -77,7 +77,7 @@ export class DecorationManager {
 
         // Aplicar decoraciones para bloques (incluye Documentation)
         if (multiLineComments.length > 0) {
-            const blockDecorations = BlockDecorationApplier.apply(editor, multiLineComments, style, this.decorationFactory);
+            const blockDecorations = BlockDecorationApplier.apply(editor, multiLineComments, style, this.decorationFactory, this.configManager);
             decorations.push(...blockDecorations);
         }
 

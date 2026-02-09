@@ -1,8 +1,10 @@
 import * as vscode from 'vscode';
-import { DetectedComment, DecorationStyle } from '../types';
+import { DetectedComment, DecorationStyle, CustomTag } from '../types';
 import { TextCleaner } from './textCleaner';
 import { ColorManager } from './colorManager';
 import { DecorationTypeFactory } from './decorationTypeFactory';
+import { getIconUri } from './iconManager';
+import { ConfigManager } from '../configManager';
 
 /**
  * Aplicador de decoraciones para bloques multilínea
@@ -14,22 +16,25 @@ export class BlockDecorationApplier {
      * @param comments Comentarios a decorar
      * @param style Estilo de decoración
      * @param factory Factory de tipos de decoración
+     * @param configManager Gestor de configuración
      * @returns Array de tipos de decoración aplicados
      */
     public static apply(
         editor   : vscode.TextEditor,
         comments : DetectedComment[],
         style    : DecorationStyle,
-        factory  : DecorationTypeFactory
+        factory  : DecorationTypeFactory,
+        configManager: ConfigManager
     ): vscode.TextEditorDecorationType[] {
         const backgroundDecorations : vscode.DecorationOptions[] = [];
         const textDecorations       : vscode.DecorationOptions[] = [];
         const hideDecorations       : vscode.DecorationOptions[] = [];
+        const iconDecorations       : vscode.DecorationOptions[] = [];
 
         comments.forEach(comment => {
             // Obtener colores según si es documentación
             const isDocumentation = comment.isDocumentation || false;
-            const colors = ColorManager.getColors(style, isDocumentation);
+            const colors = ColorManager.getColors(style, isDocumentation, comment.customTag);
 
             // Obtener el texto del comentario del editor
             const fullText = editor.document.getText(comment.range);
@@ -47,7 +52,12 @@ export class BlockDecorationApplier {
             // Calcular el ancho en píxeles aproximado (usando tamaño de fuente monospace)
             // fontSize promedio: ~0.6em por caracter en fuentes monospace
             const estimatedWidthCh = maxWidth + 4; // +4 para padding visual
-            
+
+            // Calcular padding izquierdo si hay icono
+            const hasIcon = configManager.showIcons() && comment.customTag && comment.customTag !== CustomTag.None;
+            const iconSize = configManager.getIconSize();
+            const leftPadding = hasIcon ? iconSize + 8 : style.paddingHorizontal;
+
             // Crear decoración de fondo en la PRIMERA línea (para que se dibuje desde arriba)
             const firstLineEnd = new vscode.Position(
                 comment.range.start.line,
@@ -61,10 +71,33 @@ export class BlockDecorationApplier {
                     after: {
                         contentText: '',
                         backgroundColor: colors.backgroundColor,
-                        textDecoration: `none; display: inline-block; border-radius: ${style.borderRadius}px; border-left: 3px solid ${colors.textColor}; padding: ${style.inlinePaddingTop} ${style.paddingHorizontal}px ${style.inlinePaddingBottom} ${style.paddingHorizontal}px; opacity: ${style.opacity}; margin: 0px 0px 0px 8px; width: ${estimatedWidthCh}ch; min-height: ${lines.length * 1.3}em;`
+                        textDecoration: `none; display: inline-block; border-radius: ${style.borderRadius}px; border-left: 3px solid ${colors.accentColor}; padding: ${style.inlinePaddingTop} ${style.paddingHorizontal}px ${style.inlinePaddingBottom} ${leftPadding}px; opacity: ${style.opacity}; margin: 0px 0px 0px 8px; width: ${estimatedWidthCh}ch; min-height: ${lines.length * 1.3}em;`
                     }
                 }
             });
+
+            // Añadir icono en la primera línea si está habilitado
+            if (hasIcon) {
+                const iconUri = getIconUri(comment.customTag!, colors.textColor, iconSize);
+                if (iconUri) {
+                    // Usar margen configurado, pero ajustar para solapar con el fondo
+                    // Calculamos margen negativo a la derecha para que el icono se integre en el fondo
+                    const configuredMargin = configManager.getIconMargin();
+                    const iconMargin = `0 -${iconSize + 4}px 0 0`; // Aún forzado para solapar correctamente
+                    iconDecorations.push({
+                        range: new vscode.Range(comment.range.start, firstLineEnd),
+                        renderOptions: {
+                            before: {
+                                contentIconPath: iconUri,
+                                width: `${iconSize}px`,
+                                height: `${iconSize}px`,
+                                margin: iconMargin,
+                                textDecoration: `none; display: inline-flex; align-items: center; vertical-align: middle; position: absolute; top: 0; z-index: 1; padding-left: 4px; padding-top: 1px;`
+                            }
+                        }
+                    });
+                }
+            }
 
             // Ocultar todo el comentario original (todas las líneas)
             hideDecorations.push({
@@ -129,6 +162,15 @@ export class BlockDecorationApplier {
             const bgDecorationType = factory.createBlockBackgroundDecoration();
             editor.setDecorations(bgDecorationType, backgroundDecorations);
             decorationTypes.push(bgDecorationType);
+        }
+
+        // Aplicar decoraciones de iconos (si existen)
+        if (iconDecorations.length > 0) {
+            const iconDecorationType = vscode.window.createTextEditorDecorationType({
+                rangeBehavior: vscode.DecorationRangeBehavior.ClosedClosed
+            });
+            editor.setDecorations(iconDecorationType, iconDecorations);
+            decorationTypes.push(iconDecorationType);
         }
 
         // Aplicar decoraciones de texto

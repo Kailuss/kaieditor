@@ -66,7 +66,7 @@
         },
         "kaieditor.borderRadius": {
           "type": "number",
-          "default": 6,
+          "default": 16,
           "minimum": 0,
           "maximum": 20,
           "description": "Border radius in pixels"
@@ -104,50 +104,89 @@
           "maximum": 1.0,
           "description": "Opacity level for comment boxes"
         },
-        "kaieditor.singleLineStyle.backgroundColor": {
+        "kaieditor.inlineFontSize": {
           "type": "string",
-          "default": "#2d3748",
-          "description": "[Legacy] Background color for single-line comment boxes"
+          "default": "0.64em",
+          "description": "Font size for inline comments (e.g., '0.64em', '12px')"
         },
-        "kaieditor.singleLineStyle.textColor": {
+        "kaieditor.inlinePaddingTop": {
           "type": "string",
-          "default": "#e2e8f0",
-          "description": "[Legacy] Text color for single-line comment boxes"
+          "default": "1px",
+          "description": "Top padding for inline comments"
         },
-        "kaieditor.singleLineStyle.borderColor": {
+        "kaieditor.inlinePaddingBottom": {
           "type": "string",
-          "default": "#4a5568",
-          "description": "[Legacy] Border color for single-line comment boxes"
+          "default": "0.5px",
+          "description": "Bottom padding for inline comments"
         },
-        "kaieditor.multiLineStyle.backgroundColor": {
+        "kaieditor.blockFontSize": {
           "type": "string",
-          "default": "#1a365d",
-          "description": "[Legacy] Background color for multi-line comment boxes"
+          "default": "0.9em",
+          "description": "Font size for block comments (e.g., '0.9em', '14px')"
         },
-        "kaieditor.multiLineStyle.textColor": {
-          "type": "string",
-          "default": "#bee3f8",
-          "description": "[Legacy] Text color for multi-line comment boxes"
+        "kaieditor.blockPaddingMultiplier": {
+          "type": "number",
+          "default": 2,
+          "minimum": 1,
+          "maximum": 5,
+          "description": "Multiplier for vertical padding in block comments"
         },
-        "kaieditor.multiLineStyle.borderColor": {
+        "kaieditor.tagColors.important": {
           "type": "string",
-          "default": "#2c5282",
-          "description": "[Legacy] Border color for multi-line comment boxes"
+          "default": "#ff6b6b99",
+          "description": "Background color for //! important tags"
         },
-        "kaieditor.inlineStyle.backgroundColor": {
+        "kaieditor.tagColors.success": {
           "type": "string",
-          "default": "#44337a",
-          "description": "[Legacy] Background color for inline comment boxes"
+          "default": "#49c78a99",
+          "description": "Background color for //· success tags"
         },
-        "kaieditor.inlineStyle.textColor": {
+        "kaieditor.tagColors.warning": {
           "type": "string",
-          "default": "#e9d8fd",
-          "description": "[Legacy] Text color for inline comment boxes"
+          "default": "#ffb86b99",
+          "description": "Background color for //? warning tags"
         },
-        "kaieditor.inlineStyle.borderColor": {
+        "kaieditor.tagColors.info": {
           "type": "string",
-          "default": "#6b46c1",
-          "description": "[Legacy] Border color for inline comment boxes"
+          "default": "#74b3ff99",
+          "description": "Background color for //@ info tags"
+        },
+        "kaieditor.tagColors.debug": {
+          "type": "string",
+          "default": "#b084ff99",
+          "description": "Background color for //# debug tags"
+        },
+        "kaieditor.docColors.backgroundColor": {
+          "type": "string",
+          "default": "#061425",
+          "description": "Background color for documentation comments (JSDoc, etc.)"
+        },
+        "kaieditor.docColors.borderColor": {
+          "type": "string",
+          "default": "#1b2b3a",
+          "description": "Border color for documentation comments"
+        },
+        "kaieditor.docColors.textColor": {
+          "type": "string",
+          "default": "#bcd6ee",
+          "description": "Text color for documentation comments"
+        },
+        "kaieditor.showIcons": {
+          "type": "boolean",
+          "default": true,
+          "description": "Mostrar iconos SVG antes del texto de comentarios con tags personalizados (!,·,?,@,#)"
+        },
+        "kaieditor.iconSize": {
+          "type": "number",
+          "default": 12,
+          "minimum": 10,
+          "maximum": 18,
+          "description": "Tamaño de los iconos en píxeles (afecta también al padding del fondo para integrarlos)"
+        },
+        "kaieditor.iconMargin": {
+          "type": "string",
+          "default": "0 4px 0 0",
+          "description": "Margen de los iconos (formato CSS: top right bottom left)"
         }
       }
     }

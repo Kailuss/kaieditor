@@ -2,7 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import { CommentDetector } from './commentDetection';
-import { DecorationManager } from './decorationManagement';
+import { DecorationManager, clearIconCache } from './decorationManagement';
 import { ConfigManager } from './configManager';
 
 // Instancias globales
@@ -82,6 +82,9 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		configManager.onConfigChange(() => {
 			console.log('[KaiEditor] 🔧 Configuration changed, refreshing all decorations');
+			// Limpiar caché de iconos para que los cambios en iconSize/showIcons/iconMargin tengan efecto
+			clearIconCache();
+			console.log('[KaiEditor] 🗑️ Icon cache cleared');
 			// Limpiar todas las decoraciones primero para forzar recreación
 			decorationManager.clearAllDecorations();
 			// Actualizar editor activo con nueva configuración

@@ -62,32 +62,43 @@ export interface CommentPatterns {
  * Configuración de estilos para las cajas de comentarios con CSS puro
  */
 export interface DecorationStyle {
+    // Colores básicos
     backgroundColor         : string; // Color de fondo de la caja
     textColor               : string; // Color del texto
     borderColor             : string; // Color del borde
-    accentColor             : string; // Color de acento (para borde lateral en bloques)
+    accentColor             : string; // Color de acento (para borde lateral izquierdo en bloques)
+    
+    // Geometría
     borderRadius            : number; // Radio del borde en píxeles
     paddingVertical         : number; // Padding vertical en píxeles
     paddingHorizontal       : number; // Padding horizontal en píxeles
+    
+    // Tipografía
     fontStyle               : string; // Estilo de fuente (normal, italic)
     fontWeight              : string; // Peso de fuente (400, 500, 600)
     opacity                 : number; // Opacidad (0.0 - 1.0)
-    inlineFontSize?         : string; // Tamaño de fuente para comentarios inline (ej: '0.8em')
-    inlinePaddingTop?       : string; // Padding top para comentarios inline
-    inlinePaddingBottom?    : string; // Padding bottom para comentarios inline
-    blockFontSize?          : string; // Tamaño de fuente para bloques de documentación
-    blockPaddingMultiplier? : number; // Multiplicador para padding vertical en bloques de documentación (ej: 2 para el doble del padding normal)
-    tagColors?: {                     // Colores para custom tags
-        important? : string; // //! - Rojo
-        success?   : string; // //· - Verde
-        warning?   : string; // //? - Amarillo
-        info?      : string; // //@ - Azul
-        debug?     : string; // //# - Morado
+    
+    // Tamaños específicos por tipo de comentario
+    inlineFontSize          : string; // Tamaño de fuente para comentarios inline (ej: '0.64em')
+    inlinePaddingTop        : string; // Padding top para comentarios inline
+    inlinePaddingBottom     : string; // Padding bottom para comentarios inline
+    blockFontSize           : string; // Tamaño de fuente para bloques multi-línea
+    blockPaddingMultiplier  : number; // Multiplicador para padding vertical en bloques
+    
+    // Colores para custom tags
+    tagColors: {
+        important : string; // //! - Rojo
+        success   : string; // //· - Verde
+        warning   : string; // //? - Amarillo
+        info      : string; // //@ - Azul
+        debug     : string; // //# - Morado
     };
-    docColors?: {                     // Colores específicos para comentarios de documentación
-        backgroundColor?: string;
-        borderColor?: string;
-        textColor?: string;
+    
+    // Colores específicos para comentarios de documentación
+    docColors: {
+        backgroundColor : string;
+        borderColor     : string;
+        textColor       : string;
     };
 }
 
@@ -95,10 +106,10 @@ export interface DecorationStyle {
  * Configuración completa de la extensión
  */
 export interface KaiEditorConfig {
-    enabled               : boolean;             // Indica si la extensión está habilitada
-    enabledLanguages      : SupportedLanguage[]; // Lenguajes habilitados para transformación
-    decorationStyle       : DecorationStyle;     // Estilo de decoración para cajas de comentarios
-    singleLineStyle       : DecorationStyle;     // Estilos para comentarios de una línea
-    multiLineStyle        : DecorationStyle;     // Estilos para comentarios multilínea
-    inlineStyle           : DecorationStyle;     // Estilos para comentarios inline
+    enabled          : boolean;             // Indica si la extensión está habilitada
+    enabledLanguages : SupportedLanguage[]; // Lenguajes habilitados para transformación
+    decorationStyle  : DecorationStyle;     // Estilo de decoración unificado para todos los comentarios
+    showIcons        : boolean;             // Mostrar iconos antes de comentarios con tags
+    iconSize         : number;              // Tamaño de los iconos en píxeles
+    iconMargin       : string;              // Margen CSS de los iconos
 }

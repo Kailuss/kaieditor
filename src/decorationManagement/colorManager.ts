@@ -39,7 +39,7 @@ export class ColorManager {
      * @param style Estilo de decoración configurado
      * @param isDocumentation Si el comentario es de documentación
      * @param customTag Tag personalizado (opcional)
-     * @returns Objeto con backgroundColor, textColor y borderColor
+     * @returns Objeto con backgroundColor, textColor, borderColor y accentColor
      */
     public static getColors(
         style           : DecorationStyle, 
@@ -48,7 +48,8 @@ export class ColorManager {
     ): {
         backgroundColor : string;
         textColor       : string;
-        borderColor     : string
+        borderColor     : string;
+        accentColor     : string;
     } {
         const baseColor = ColorManager.getTagColor(style, customTag);
 
@@ -56,14 +57,16 @@ export class ColorManager {
             return {
                 backgroundColor : style.docColors.backgroundColor || baseColor,
                 textColor       : style.docColors.textColor       || style.textColor,
-                borderColor     : style.docColors.borderColor     || style.borderColor
+                borderColor     : style.docColors.borderColor     || style.borderColor,
+                accentColor     : style.accentColor
             };
         }
 
         return {
             backgroundColor : baseColor,
             textColor       : style.textColor,
-            borderColor     : style.borderColor
+            borderColor     : style.borderColor,
+            accentColor     : style.accentColor
         };
     }
 }
