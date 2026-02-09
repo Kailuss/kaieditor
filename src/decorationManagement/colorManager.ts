@@ -25,10 +25,13 @@ export class ColorManager {
         const colorMap: Record<CustomTag, string | undefined> = {
             [CustomTag.None]      : undefined,
             [CustomTag.Important] : tagColors.important,
-            [CustomTag.Success]   : tagColors.success,
+            [CustomTag.Completed] : tagColors.completed,
             [CustomTag.Warning]   : tagColors.warning,
             [CustomTag.Info]      : tagColors.info,
-            [CustomTag.Debug]     : tagColors.debug
+            [CustomTag.Debug]     : tagColors.debug,
+            [CustomTag.Pending]   : tagColors.pending,
+            [CustomTag.Active]    : tagColors.active,
+            [CustomTag.Conflict]  : tagColors.conflict
         };
 
         return colorMap[tag] || style.backgroundColor;

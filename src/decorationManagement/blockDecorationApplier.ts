@@ -64,26 +64,11 @@ export class BlockDecorationApplier {
                 editor.document.lineAt(comment.range.start.line).text.length
             );
 
-            backgroundDecorations.push({
-                range: new vscode.Range(comment.range.start, firstLineEnd),
-                hoverMessage: '**Block Comment**\n```\n' + fullText + '\n```',
-                renderOptions: {
-                    after: {
-                        contentText: '',
-                        backgroundColor: colors.backgroundColor,
-                        textDecoration: `none; display: inline-block; border-radius: ${style.borderRadius}px; border-left: 3px solid ${colors.accentColor}; padding: ${style.inlinePaddingTop} ${style.paddingHorizontal}px ${style.inlinePaddingBottom} ${leftPadding}px; opacity: ${style.opacity}; margin: 0px 0px 0px 8px; width: ${estimatedWidthCh}ch; min-height: ${lines.length * 1.3}em;`
-                    }
-                }
-            });
-
             // Añadir icono en la primera línea si está habilitado
             if (hasIcon) {
                 const iconUri = getIconUri(comment.customTag!, colors.textColor, iconSize);
                 if (iconUri) {
-                    // Usar margen configurado, pero ajustar para solapar con el fondo
-                    // Calculamos margen negativo a la derecha para que el icono se integre en el fondo
-                    const configuredMargin = configManager.getIconMargin();
-                    const iconMargin = `0 -${iconSize + 4}px 0 0`; // Aún forzado para solapar correctamente
+                    const iconMargin = configManager.getCalculatedIconMargin(true);
                     iconDecorations.push({
                         range: new vscode.Range(comment.range.start, firstLineEnd),
                         renderOptions: {
@@ -92,7 +77,7 @@ export class BlockDecorationApplier {
                                 width: `${iconSize}px`,
                                 height: `${iconSize}px`,
                                 margin: iconMargin,
-                                textDecoration: `none; display: inline-flex; align-items: center; vertical-align: middle; position: absolute; top: 0; z-index: 1; padding-left: 4px; padding-top: 1px;`
+                                textDecoration: `none; display: inline-flex; align-items: center; vertical-align: middle; position: absolute; z-index: 1; padding-left: 0.2em; padding-top: 0.2em;`
                             }
                         }
                     });

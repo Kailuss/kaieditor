@@ -26,12 +26,14 @@ export class ConfigManager {
                 SupportedLanguage.TypeScript,
                 SupportedLanguage.Python,
                 SupportedLanguage.Rust,
-                SupportedLanguage.Go
+                SupportedLanguage.Go,
+                SupportedLanguage.CSharp,
+                SupportedLanguage.Java,
+                SupportedLanguage.PHP
             ]),
             decorationStyle: this.loadDecorationStyle(config),
             showIcons: config.get<boolean>('showIcons', true),
-            iconSize: config.get<number>('iconSize', 12),
-            iconMargin: config.get<string>('iconMargin', '0 4px 0 0')
+            iconSize: 16 // Tamaño fijo optimizado
         };
     }
 
@@ -40,27 +42,29 @@ export class ConfigManager {
      */
     private loadDecorationStyle(config: vscode.WorkspaceConfiguration): DecorationStyle {
         return {
-            backgroundColor        : config.get<string>('backgroundColor'       , '#2e3440'),
+            backgroundColor        : config.get<string>('backgroundColor'       , '#16161d99'),
             textColor              : config.get<string>('textColor'             , '#eceff4'),
             borderColor            : config.get<string>('borderColor'           , '#4c566a'),
-            accentColor            : config.get<string>('accentColor'           , '#88c0d0'),
-            borderRadius           : config.get<number>('borderRadius'          , 16),
+            accentColor            : config.get<string>('accentColor'           , '#3399ffdd'),
+            borderRadius           : config.get<number>('borderRadius'          , 8),
             paddingVertical        : config.get<number>('paddingVertical'       , 3),
             paddingHorizontal      : config.get<number>('paddingHorizontal'     , 10),
             fontStyle              : config.get<string>('fontStyle'             , 'normal'),
-            fontWeight             : config.get<string>('fontWeight'            , '400'),
-            opacity                : config.get<number>('opacity'               , 0.95),
-            inlineFontSize         : config.get<string>('inlineFontSize'        , '0.64em'),
-            inlinePaddingTop       : config.get<string>('inlinePaddingTop'      , '1px'),
-            inlinePaddingBottom    : config.get<string>('inlinePaddingBottom'   , '0.5px'),
-            blockFontSize          : config.get<string>('blockFontSize'         , '0.9em'),
-            blockPaddingMultiplier : config.get<number>('blockPaddingMultiplier', 2),
+            fontWeight             : config.get<string>('fontWeight'            , '500'),
+            opacity                : config.get<number>('opacity'               , 1),
+            inlineFontSize         : config.get<string>('inlineFontSize'        , '0.75em'),
+            inlinePaddingTop       : config.get<string>('inlinePaddingTop'      , '1.5px'),
+            inlinePaddingBottom    : config.get<string>('inlinePaddingBottom'   , '0.75px'),
+            blockFontSize          : config.get<string>('blockFontSize'         , '0.75em'),
             tagColors              : {
-            important : config.get<string>('tagColors.important', '#ff6b6b99'),
-            success   : config.get<string>('tagColors.success'  , '#49c78a99'),
-            warning   : config.get<string>('tagColors.warning'  , '#ffb86b99'),
-            info      : config.get<string>('tagColors.info'     , '#74b3ff99'),
-            debug     : config.get<string>('tagColors.debug'    , '#b084ff99')
+                important : config.get<string>('tagColors.important', '#ff6b6b99'),
+                completed : config.get<string>('tagColors.completed', '#49c78a99'),
+                warning   : config.get<string>('tagColors.warning'  , '#ffb86b99'),
+                info      : config.get<string>('tagColors.info'     , '#74b3ff99'),
+                debug     : config.get<string>('tagColors.debug'    , '#b084ff99'),
+                pending   : config.get<string>('tagColors.pending'  , '#ffde6b99'),
+                active    : config.get<string>('tagColors.active'   , '#61c7fa99'),
+                conflict  : config.get<string>('tagColors.conflict' , '#ff6b6b99'),
             },
             docColors              : {
             backgroundColor : config.get<string>('docColors.backgroundColor', '#061425'),
@@ -80,8 +84,7 @@ export class ConfigManager {
     /**
      * Recarga la configuración (útil cuando el usuario cambia settings)
      */
-    public reloadConfig(): void {
-        this.config = this.loadConfig();
+    public reloadConfig(): void { this.config = this.loadConfig();
     }
 
     /**
@@ -101,29 +104,29 @@ export class ConfigManager {
     /**
      * Obtiene el estilo de decoración actual
      */
-    public getDecorationStyle(): DecorationStyle {
-        return this.config.decorationStyle;
-    }
+    public getDecorationStyle(): DecorationStyle { return this.config.decorationStyle; }
 
     /**
      * Verifica si los iconos están habilitados
      */
-    public showIcons(): boolean {
-        return this.config.showIcons;
-    }
+    public showIcons(): boolean { return this.config.showIcons; }
 
     /**
-     * Obtiene el tamaño de los iconos en píxeles
+     * Obtiene el tamaño de los iconos en píxeles (siempre 16px)
      */
-    public getIconSize(): number {
-        return this.config.iconSize;
-    }
+    public getIconSize(): number { return this.config.iconSize; }
 
     /**
-     * Obtiene el margen de los iconos
+     * Calcula el margen óptimo para iconos de 16px
+     * @param isBlock Si es decoración de bloque (necesita más espacio)
+     * @returns Margen CSS en formato 'top right bottom left'
      */
-    public getIconMargin(): string {
-        return this.config.iconMargin;
+    public getCalculatedIconMargin(isBlock: boolean = false): string {
+        const iconSize = this.config.iconSize;
+        // Margen negativo a la derecha para que el icono se solape con el fondo de la decoración
+        // Block necesita +4px extra para compensar el padding del contenedor
+        const rightMargin = isBlock ? iconSize + 4 : iconSize;
+        return `0 -${rightMargin}px 0 0`;
     }
 
     /**

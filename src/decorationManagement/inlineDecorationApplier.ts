@@ -56,10 +56,7 @@ export class InlineDecorationApplier {
             if (hasIcon) {
                 const iconUri = getIconUri(comment.customTag!, colors.textColor, iconSize);
                 if (iconUri) {
-                    // Usar margen configurado, pero ajustar para solapar con el fondo
-                    // Calculamos margen negativo a la derecha para que el icono se integre en el fondo
-                    const configuredMargin = configManager.getIconMargin();
-                    const iconMargin = `0 -${iconSize}px 0 0`; // Aún forzado para solapar correctamente
+                    const iconMargin = configManager.getCalculatedIconMargin(false);
                     renderOptions.before = {
                         contentIconPath : iconUri,
                         width           : `${iconSize}px`,
