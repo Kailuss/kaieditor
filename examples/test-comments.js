@@ -1,90 +1,145 @@
-// Ejemplo de comentarios con cajas visuales CSS
+// ═══════════════════════════════════════════════════════════════════
+// KaiEditor - Test de todos los tags personalizados
+// ═══════════════════════════════════════════════════════════════════
 
-//! Este es un comentario IMPORTANTE (rojo)
-const x = 10;
+// ─── Tags básicos ───────────────────────────────────────────────────
 
-//* Este comentario indica ÉXITO (verde)
-const userName = "Juan";
+//! IMPORTANTE: Este comentario marca algo crítico que requiere atención inmediata
+const criticalValue = 999;
 
-//? Este es un comentario de ADVERTENCIA (amarillo)
-const result = sum(5, 3);
+//✓ COMPLETADO: Esta funcionalidad ya fue implementada y probada exitosamente
+const completedFeature = true;
 
-//@ Comentario INFORMATIVO (azul)
-const PI = 3.14159;
+//? ADVERTENCIA: Ten cuidado con este código, puede causar efectos secundarios
+const riskyOperation = () => { /* ... */ };
 
-//# Comentario de DEBUG (morado)
-const debug = true;
+//@ INFO: Este es un comentario informativo con detalles adicionales
+const configPath = './config.json';
 
-const inline = "valor"; //! Comentario inline importante
-
-/**
- * Este es un comentario de DOCUMENTACIÓN
- * Debería tener un estilo especial
- * @param {number} a - Primer número
- * @param {number} b - Segundo número
- * @returns {number} La suma de a y b
- */
-function sum(a, b) {
-    // Comentario normal de línea
-    return a + b;
-}
-
-/*
- * Este es un comentario multilínea normal
- * que abarca varias líneas
- * y debería tener un borde lateral de acento
- */
-function multiply(a, b) {
-    return a * b;
-}
-
-/**
- * Calcula el área de un círculo
- * @param {number} radius - El radio del círculo
- * @returns {number} El área del círculo
- */
-function calculateCircleArea(radius) {
-    const PI = 3.14159; //* Valor constante de PI
-    return PI * radius * radius;
-}
-
-// Comentario con texto muy largo que debería truncarse automáticamente con puntos suspensivos
-const longComment = "ejemplo";
-
-//! IMPORTANTE: Esta función es crítica para el sistema
-function criticalFunction() {
-    //? Revisar esta lógica más adelante
-    return true;
-}
-
-//@ INFO: Los custom tags funcionan así:
-
-//^ Comentario IMPORTANTE usando símbolo ^
-const importantValue = 42;
-
-//~ Comentario PENDIENTE usando símbolo ~
-const pendingTask = "Por hacer";
-
-//· Comentario ACTIVO usando símbolo ·
-const activeProcess = true;
-
-//: Comentario COMPLETADO usando símbolo :
-const completedTask = "Finalizado";
-
-//? Comentario CONFLICTO usando símbolo ?
-const conflictingValue = null;
-
-//! Comentario WARNING usando símbolo !
-const warningFlag = false;
-
-//> Comentario INFO usando símbolo >
-const infoMessage = "Información útil";
-
-//# Comentario DEBUG usando símbolo #
+//# DEBUG: Variable temporal solo para debugging, eliminar antes de producción
 const debugMode = true;
 
-//! Importante (Rojo)
-//· Éxito (Verde)
-//? //? - Advertencia (Amarillo)
-//@ //@ - Info (Azul)
-//# //# - Debug (Morado)
+//~ PENDIENTE: Esta funcionalidad aún está por implementarse
+const pendingFeature = null;
+
+//· ACTIVO: Este proceso está corriendo activamente en background
+const activeProcess = setInterval(() => {}, 1000);
+
+//^ CONFLICTO: Hay un merge conflict aquí que necesita resolverse
+const conflictingValue = 'version-A'; // o 'version-B'?
+
+//» REVISAR: Este código necesita code review antes de mergear
+const needsReview = function() {
+    return 'implementación temporal';
+};
+
+//- DEPRECADO: No usar esta función, será eliminada en la próxima versión
+const deprecatedFunction = () => console.warn('deprecated');
+
+//× ERROR: Este código tiene un bug conocido que necesita fix urgente
+const buggyCode = null.toString(); // NullPointerException!
+
+//* NOTA: Información adicional sobre el comportamiento esperado
+const expectedBehavior = 'async';
+
+//¿ PREGUNTA: ¿Debería este valor ser configurable o hardcoded?
+const questionableValue = 42;
+
+// ─── Comentarios inline ────────────────────────────────────────────
+
+const user = "John";      //! Validar que no sea null
+const age = 25;           //✓ Validación implementada
+const email = "x@y.com";  //? Verificar formato
+const status = "active";  //@ Estado por defecto
+const debug = false;      //# Cambiar a false en producción
+const pending = null;     //~ Implementar validación
+const active = true;      //· Proceso activo
+const conflict = "v1";    //^ Resolver conflicto
+const review = "code";    //» Necesita revisión
+const old = legacyAPI();  //- Usar newAPI() en su lugar
+const error = null;       //× Fix: validar antes de usar
+const note = "info";      //* Ver documentación
+const question = 10;      //¿ Debería ser configurable?
+
+// ─── Comentarios de documentación ──────────────────────────────────
+
+/**
+ * Función principal del sistema
+ * 
+ * Esta función procesa los datos de entrada y retorna
+ * el resultado después de aplicar todas las transformaciones.
+ * 
+ * @param {string} input - Datos de entrada
+ * @param {Object} options - Opciones de configuración
+ * @returns {Promise<string>} Resultado procesado
+ * 
+ * @example
+ * const result = await processData('input', { strict: true });
+ */
+async function processData(input, options) {
+    //! Validar input antes de procesar
+    if (!input) throw new Error('Input required');
+    
+    //✓ Validación implementada
+    const validated = validate(input);
+    
+    //? Verificar si options es necesario
+    const config = options || getDefaultOptions();
+    
+    return validated;
+}
+
+/**
+ * Clase de ejemplo con todos los tags
+ * 
+ * @class ExampleClass
+ */
+class ExampleClass {
+    constructor() {
+        //@ Inicialización por defecto
+        this.data = {};
+        
+        //# Solo para debugging
+        this.debugInfo = Date.now();
+    }
+    
+    /**
+     * Método de ejemplo
+     * @returns {boolean} Estado de operación
+     */
+    execute() {
+        //~ Implementar lógica real
+        return true;
+    }
+}
+
+// ─── Comentarios multilínea ────────────────────────────────────────
+
+/*
+ * Este es un bloque de comentario normal
+ * que explica la lógica compleja del algoritmo
+ * implementado a continuación
+ */
+function complexAlgorithm() {
+    return 42;
+}
+
+// ─── Resumen de todos los tags ─────────────────────────────────────
+
+/*
+ * Guía rápida de tags personalizados:
+ * 
+ * //! - IMPORTANTE (rojo)     - Requiere atención inmediata
+ * //✓ - COMPLETADO (verde)    - Tarea finalizada
+ * //? - ADVERTENCIA (amarillo) - Precaución necesaria
+ * //@ - INFO (azul)           - Información adicional
+ * //# - DEBUG (morado)        - Solo para debugging
+ * //~ - PENDIENTE (amarillo)  - Por implementar
+ * //· - ACTIVO (cyan)         - Proceso activo
+ * //^ - CONFLICTO (rojo)      - Conflicto a resolver
+ * //» - REVISAR (cyan)        - Necesita code review
+ * //- - DEPRECADO (gris)      - Obsoleto, no usar
+ * //× - ERROR (rojo)          - Bug conocido
+ * //* - NOTA (amarillo)       - Nota informativa
+ * //¿ - PREGUNTA (morado)     - Decisión pendiente
+ */

@@ -129,10 +129,10 @@
           "default": "#ff6b6b99",
           "description": "Background color for //! important tags"
         },
-        "kaieditor.tagColors.success": {
+        "kaieditor.tagColors.completed": {
           "type": "string",
           "default": "#49c78a99",
-          "description": "Background color for //· success tags"
+          "description": "Background color for //✓ completed tags"
         },
         "kaieditor.tagColors.warning": {
           "type": "string",
@@ -148,6 +148,46 @@
           "type": "string",
           "default": "#b084ff99",
           "description": "Background color for //# debug tags"
+        },
+        "kaieditor.tagColors.pending": {
+          "type": "string",
+          "default": "#ffde6b99",
+          "description": "Background color for //~ pending tags"
+        },
+        "kaieditor.tagColors.active": {
+          "type": "string",
+          "default": "#61c7fa99",
+          "description": "Background color for //· active tags"
+        },
+        "kaieditor.tagColors.conflict": {
+          "type": "string",
+          "default": "#ff6b6b99",
+          "description": "Background color for //^ conflict tags"
+        },
+        "kaieditor.tagColors.review": {
+          "type": "string",
+          "default": "#8be9fd99",
+          "description": "Background color for //» review tags"
+        },
+        "kaieditor.tagColors.deprecated": {
+          "type": "string",
+          "default": "#6c757d99",
+          "description": "Background color for //- deprecated tags"
+        },
+        "kaieditor.tagColors.error": {
+          "type": "string",
+          "default": "#ff5555cc",
+          "description": "Background color for //× error tags"
+        },
+        "kaieditor.tagColors.note": {
+          "type": "string",
+          "default": "#f1fa8c99",
+          "description": "Background color for //* note tags"
+        },
+        "kaieditor.tagColors.question": {
+          "type": "string",
+          "default": "#bd93f999",
+          "description": "Background color for //¿ question tags"
         },
         "kaieditor.docColors.backgroundColor": {
           "type": "string",

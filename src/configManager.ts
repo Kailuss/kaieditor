@@ -46,7 +46,7 @@ export class ConfigManager {
             textColor              : config.get<string>('textColor'             , '#eceff4'),
             borderColor            : config.get<string>('borderColor'           , '#4c566a'),
             accentColor            : config.get<string>('accentColor'           , '#3399ffdd'),
-            borderRadius           : config.get<number>('borderRadius'          , 8),
+            borderRadius           : config.get<number>('borderRadius'          , 4),
             paddingVertical        : config.get<number>('paddingVertical'       , 3),
             paddingHorizontal      : config.get<number>('paddingHorizontal'     , 10),
             fontStyle              : config.get<string>('fontStyle'             , 'normal'),
@@ -57,14 +57,19 @@ export class ConfigManager {
             inlinePaddingBottom    : config.get<string>('inlinePaddingBottom'   , '0.75px'),
             blockFontSize          : config.get<string>('blockFontSize'         , '0.75em'),
             tagColors              : {
-                important : config.get<string>('tagColors.important', '#ff6b6b99'),
-                completed : config.get<string>('tagColors.completed', '#49c78a99'),
-                warning   : config.get<string>('tagColors.warning'  , '#ffb86b99'),
-                info      : config.get<string>('tagColors.info'     , '#74b3ff99'),
-                debug     : config.get<string>('tagColors.debug'    , '#b084ff99'),
-                pending   : config.get<string>('tagColors.pending'  , '#ffde6b99'),
-                active    : config.get<string>('tagColors.active'   , '#61c7fa99'),
-                conflict  : config.get<string>('tagColors.conflict' , '#ff6b6b99'),
+                important  : config.get<string>('tagColors.important' , '#ff6b6b99'),
+                completed  : config.get<string>('tagColors.completed' , '#49c78a99'),
+                warning    : config.get<string>('tagColors.warning'   , '#ffb86b99'),
+                info       : config.get<string>('tagColors.info'      , '#74b3ff99'),
+                debug      : config.get<string>('tagColors.debug'     , '#b084ff99'),
+                pending    : config.get<string>('tagColors.pending'   , '#ffde6b99'),
+                active     : config.get<string>('tagColors.active'    , '#61c7fa99'),
+                conflict   : config.get<string>('tagColors.conflict'  , '#ff6b6b99'),
+                review     : config.get<string>('tagColors.review'    , '#8be9fd99'),
+                deprecated : config.get<string>('tagColors.deprecated', '#6c757d99'),
+                error      : config.get<string>('tagColors.error'     , '#ff5555cc'),
+                note       : config.get<string>('tagColors.note'      , '#f1fa8c99'),
+                question   : config.get<string>('tagColors.question'  , '#bd93f999')
             },
             docColors              : {
             backgroundColor : config.get<string>('docColors.backgroundColor', '#061425'),
@@ -126,7 +131,7 @@ export class ConfigManager {
         // Margen negativo a la derecha para que el icono se solape con el fondo de la decoración
         // Block necesita +4px extra para compensar el padding del contenedor
         const rightMargin = isBlock ? iconSize + 4 : iconSize;
-        return `0 -${rightMargin}px 0 0`;
+        return `0.14em -${rightMargin}px 0 0`;
     }
 
     /**

@@ -39,7 +39,7 @@ export class InlineDecorationApplier {
             // Preparar opciones de renderizado base
             const hasIcon = configManager.showIcons() && comment.customTag && comment.customTag !== CustomTag.None;
             const iconSize = configManager.getIconSize();
-            const leftPadding = hasIcon ? iconSize + 8 : style.paddingHorizontal; // Espacio para icono + margen
+            const leftPadding = hasIcon ? iconSize + 16 : style.paddingHorizontal; // Espacio para icono + margen
 
             const renderOptions: any = {
                 after: {
@@ -62,7 +62,7 @@ export class InlineDecorationApplier {
                         width           : `${iconSize}px`,
                         height          : `${iconSize}px`,
                         margin          : iconMargin,
-                        textDecoration  : `none; display: inline-flex; align-items: center; vertical-align: middle; position: absolute; z-index: 1; padding-left: 4px;`
+                        textDecoration  : `none; display: inline-flex; align-items: center; vertical-align: middle; position: absolute; z-index: 1; padding-left: 10px;`
                     };
                 }
             }

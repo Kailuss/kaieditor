@@ -28,15 +28,20 @@ export enum CommentType {
  * Tag personalizado para comentarios de línea
  */
 export enum CustomTag {
-    None      = 'none',
-    Important = '^',
-    Pending   = '~',
-    Active    = '·',
-    Completed = ':',
-    Conflict  = '?',
-    Warning   = '!',
-    Info      = '>',
-    Debug     = '#'
+    None       = 'none',
+    Important  = '!',  // //!
+    Completed  = '✓',  // //✓
+    Warning    = '?',  // //?
+    Info       = '@',  // //@
+    Debug      = '#',  // //#
+    Pending    = '~',  // //~
+    Active     = '·',  // //·
+    Conflict   = '^',  // //^
+    Review     = '»',  // //»
+    Deprecated = '-',  // //-
+    Error      = '×',  // //×
+    Note       = '*',  // //*
+    Question   = '¿'   // //¿
 }
 
 /**
@@ -89,14 +94,19 @@ export interface DecorationStyle {
 
     // Colores para custom tags
     tagColors: {
-        important : string;
-        completed : string;
-        warning   : string;
-        info      : string;
-        debug     : string;
-        pending   : string;
-        active    : string;
-        conflict  : string;
+        important  : string;
+        completed  : string;
+        warning    : string;
+        info       : string;
+        debug      : string;
+        pending    : string;
+        active     : string;
+        conflict   : string;
+        review     : string;
+        deprecated : string;
+        error      : string;
+        note       : string;
+        question   : string;
     };
 
     // Colores específicos para comentarios de documentación

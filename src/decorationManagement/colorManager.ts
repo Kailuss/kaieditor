@@ -23,15 +23,20 @@ export class ColorManager {
 
         // Mapeo de tags a colores, con fallback al color de fondo general
         const colorMap: Record<CustomTag, string | undefined> = {
-            [CustomTag.None]      : undefined,
-            [CustomTag.Important] : tagColors.important,
-            [CustomTag.Completed] : tagColors.completed,
-            [CustomTag.Warning]   : tagColors.warning,
-            [CustomTag.Info]      : tagColors.info,
-            [CustomTag.Debug]     : tagColors.debug,
-            [CustomTag.Pending]   : tagColors.pending,
-            [CustomTag.Active]    : tagColors.active,
-            [CustomTag.Conflict]  : tagColors.conflict
+            [CustomTag.None]       : undefined,
+            [CustomTag.Important]  : tagColors.important,
+            [CustomTag.Completed]  : tagColors.completed,
+            [CustomTag.Warning]    : tagColors.warning,
+            [CustomTag.Info]       : tagColors.info,
+            [CustomTag.Debug]      : tagColors.debug,
+            [CustomTag.Pending]    : tagColors.pending,
+            [CustomTag.Active]     : tagColors.active,
+            [CustomTag.Conflict]   : tagColors.conflict,
+            [CustomTag.Review]     : tagColors.review,
+            [CustomTag.Deprecated] : tagColors.deprecated,
+            [CustomTag.Error]      : tagColors.error,
+            [CustomTag.Note]       : tagColors.note,
+            [CustomTag.Question]   : tagColors.question
         };
 
         return colorMap[tag] || style.backgroundColor;
