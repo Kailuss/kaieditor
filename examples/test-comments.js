@@ -47,19 +47,19 @@ const questionableValue = 42;
 
 // ─── Comentarios inline ────────────────────────────────────────────
 
-const user = "John";      //! Validar que no sea null
-const age = 25;           //✓ Validación implementada
-const email = "x@y.com";  //? Verificar formato
-const status = "active";  //@ Estado por defecto
-const debug = false;      //# Cambiar a false en producción
-const pending = null;     //~ Implementar validación
-const active = true;      //· Proceso activo
-const conflict = "v1";    //^ Resolver conflicto
-const review = "code";    //» Necesita revisión
-const old = legacyAPI();  //- Usar newAPI() en su lugar
-const error = null;       //× Fix: validar antes de usar
-const note = "info";      //* Ver documentación
-const question = 10;      //¿ Debería ser configurable?
+const user       = "John";      //! Validar que no sea null
+const age        = 25;          //✓ Validación implementada
+const email      = "x@y.com";   //? Verificar formato
+const status     = "active";    //@ Estado por defecto
+const debug      = false;       //# Cambiar a false en producción
+const pending    = null;        //~ Implementar validación
+const active     = true;        //· Proceso activo
+const conflict   = "v1";        //^ Resolver conflicto
+const review     = "code";      //» Necesita revisión
+const old        = legacyAPI(); //- Usar newAPI() en su lugar
+const error      = null;        //× Fix: validar antes de usar
+const note       = "info";      //* Ver documentación
+const question   = 10;          //¿ Debería ser configurable?
 
 // ─── Comentarios de documentación ──────────────────────────────────
 
@@ -77,6 +77,7 @@ const question = 10;      //¿ Debería ser configurable?
  * const result = await processData('input', { strict: true });
  */
 async function processData(input, options) {
+    if (!input) throw new Error('Input required');
     //! Validar input antes de procesar
     if (!input) throw new Error('Input required');
     
@@ -129,17 +130,17 @@ function complexAlgorithm() {
 /*
  * Guía rápida de tags personalizados:
  * 
- * //! - IMPORTANTE (rojo)     - Requiere atención inmediata
- * //✓ - COMPLETADO (verde)    - Tarea finalizada
- * //? - ADVERTENCIA (amarillo) - Precaución necesaria
- * //@ - INFO (azul)           - Información adicional
- * //# - DEBUG (morado)        - Solo para debugging
- * //~ - PENDIENTE (amarillo)  - Por implementar
- * //· - ACTIVO (cyan)         - Proceso activo
- * //^ - CONFLICTO (rojo)      - Conflicto a resolver
- * //» - REVISAR (cyan)        - Necesita code review
- * //- - DEPRECADO (gris)      - Obsoleto, no usar
- * //× - ERROR (rojo)          - Bug conocido
- * //* - NOTA (amarillo)       - Nota informativa
- * //¿ - PREGUNTA (morado)     - Decisión pendiente
+ * //! IMPORTANTE (rojo)     - Requiere atención inmediata
+ * //✓ COMPLETADO (verde)    - Tarea finalizada
+ * //? ADVERTENCIA (amarillo) - Precaución necesaria
+ * //@ INFO (azul)           - Información adicional
+ * //# DEBUG (morado)        - Solo para debugging
+ * //~ PENDIENTE (amarillo)  - Por implementar
+ * //· ACTIVO (cyan)         - Proceso activo
+ * //^ CONFLICTO (rojo)      - Conflicto a resolver
+ * //» REVISAR (cyan)        - Necesita code review
+ * //- DEPRECADO (gris)      - Obsoleto, no usar
+ * //× ERROR (rojo)          - Bug conocido
+ * //* NOTA (amarillo)       - Nota informativa
+ * //¿ PREGUNTA (morado)     - Decisión pendiente
  */

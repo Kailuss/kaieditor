@@ -42,39 +42,39 @@ export class ConfigManager {
      */
     private loadDecorationStyle(config: vscode.WorkspaceConfiguration): DecorationStyle {
         return {
-            backgroundColor        : config.get<string>('backgroundColor'       , '#16161d99'),
-            textColor              : config.get<string>('textColor'             , '#eceff4'),
-            borderColor            : config.get<string>('borderColor'           , '#4c566a'),
-            accentColor            : config.get<string>('accentColor'           , '#3399ffdd'),
-            borderRadius           : config.get<number>('borderRadius'          , 4),
-            paddingVertical        : config.get<number>('paddingVertical'       , 3),
-            paddingHorizontal      : config.get<number>('paddingHorizontal'     , 10),
-            fontStyle              : config.get<string>('fontStyle'             , 'normal'),
-            fontWeight             : config.get<string>('fontWeight'            , '500'),
-            opacity                : config.get<number>('opacity'               , 1),
-            inlineFontSize         : config.get<string>('inlineFontSize'        , '0.75em'),
-            inlinePaddingTop       : config.get<string>('inlinePaddingTop'      , '1.5px'),
-            inlinePaddingBottom    : config.get<string>('inlinePaddingBottom'   , '0.75px'),
-            blockFontSize          : config.get<string>('blockFontSize'         , '0.75em'),
+            backgroundColor        : '#4c566a',
+            textColor              : '#ffffffdd',
+            borderColor            : '#4c566a00',
+            accentColor            : '#3399ffdd',
+            borderRadius           : 16,
+            paddingVertical        : 3,
+            paddingHorizontal      : 10,
+            fontStyle              : 'normal',
+            fontWeight             : '500',
+            opacity                : 1,
+            inlineFontSize         : '0.75em',
+            inlinePaddingTop       : '1.75px',
+            inlinePaddingBottom    : '2px',
+            blockFontSize          : '0.75em',
             tagColors              : {
-                important  : config.get<string>('tagColors.important' , '#ff6b6b99'),
-                completed  : config.get<string>('tagColors.completed' , '#49c78a99'),
-                warning    : config.get<string>('tagColors.warning'   , '#ffb86b99'),
-                info       : config.get<string>('tagColors.info'      , '#74b3ff99'),
-                debug      : config.get<string>('tagColors.debug'     , '#b084ff99'),
-                pending    : config.get<string>('tagColors.pending'   , '#ffde6b99'),
-                active     : config.get<string>('tagColors.active'    , '#61c7fa99'),
-                conflict   : config.get<string>('tagColors.conflict'  , '#ff6b6b99'),
-                review     : config.get<string>('tagColors.review'    , '#8be9fd99'),
-                deprecated : config.get<string>('tagColors.deprecated', '#6c757d99'),
-                error      : config.get<string>('tagColors.error'     , '#ff5555cc'),
-                note       : config.get<string>('tagColors.note'      , '#f1fa8c99'),
-                question   : config.get<string>('tagColors.question'  , '#bd93f999')
+                important  : '#ff6b6bcc',
+                completed  : '#49c78acc',
+                warning    : '#ffb86bcc',
+                info       : '#74b3ffcc',
+                debug      : '#b084ffcc',
+                pending    : '#ffde6bcc',
+                active     : '#61c7facc',
+                conflict   : '#ff6b6bcc',
+                review     : '#8be9fd99',
+                deprecated : '#6c757d99',
+                error      : '#ff5555cc',
+                note       : '#f1fa8c99',
+                question   : '#bd93f999'
             },
             docColors              : {
-            backgroundColor : config.get<string>('docColors.backgroundColor', '#061425'),
-            borderColor     : config.get<string>('docColors.borderColor'    , '#1b2b3a'),
-            textColor       : config.get<string>('docColors.textColor'      , '#bcd6ee')
+            backgroundColor : '#061425',
+            borderColor     : '#1b2b3a',
+            textColor       : '#bcd6ee'
             }
         };
     }
@@ -130,7 +130,7 @@ export class ConfigManager {
         const iconSize = this.config.iconSize;
         // Margen negativo a la derecha para que el icono se solape con el fondo de la decoración
         // Block necesita +4px extra para compensar el padding del contenedor
-        const rightMargin = isBlock ? iconSize + 4 : iconSize;
+        const rightMargin = !isBlock ? iconSize + 14 : iconSize;
         return `0.14em -${rightMargin}px 0 0`;
     }
 

@@ -5,10 +5,18 @@ import { CustomTag } from '../types';
  * 
  * Tags soportados:
  * - //! - Important (Rojo)
- * - //· - Success (Verde)
+ * - //✓ - Completed (Verde)
  * - //? - Warning (Amarillo)
  * - //@ - Info (Azul)
  * - //# - Debug (Morado)
+ * - //~ - Pending (Amarillo)
+ * - //· - Active (Cyan)
+ * - //^ - Conflict (Rojo)
+ * - //» - Review (Cyan)
+ * - //- - Deprecated (Gris)
+ * - //× - Error (Rojo)
+ * - //* - Note (Amarillo)
+ * - //¿ - Question (Morado)
  */
 export class TagDetector {
     /**
@@ -24,14 +32,19 @@ export class TagDetector {
         const firstChar = content[0];
 
         const tagMap: Record<string, CustomTag> = {
-            '^': CustomTag.Important,
+            '!': CustomTag.Important,
+            '✓': CustomTag.Completed,
+            '?': CustomTag.Warning,
+            '@': CustomTag.Info,
+            '#': CustomTag.Debug,
             '~': CustomTag.Pending,
             '·': CustomTag.Active,
-            ':': CustomTag.Completed,
-            '?': CustomTag.Conflict,
-            '!': CustomTag.Warning,
-            '>': CustomTag.Info,
-            '#': CustomTag.Debug
+            '^': CustomTag.Conflict,
+            '»': CustomTag.Review,
+            '-': CustomTag.Deprecated,
+            '×': CustomTag.Error,
+            '*': CustomTag.Note,
+            '¿': CustomTag.Question
         };
 
         return tagMap[firstChar] ?? CustomTag.None;
