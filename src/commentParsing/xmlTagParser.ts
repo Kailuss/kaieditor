@@ -4,15 +4,15 @@ import { TextFormatter } from './textFormatter';
 /**
  * Tag inline parseada de JSDoc (formato {@tag ...})
  */
-export interface InlineTag {
+export type InlineTag = {
     tag: string;           // Nombre de la tag sin @
     content: string;       // Contenido completo
     target?: string;       // Target/referencia (para link, tutorial, etc.)
     label?: string;        // Label personalizado (para link|label)
-    raw: string;           // Texto raw completo incluyendo {@...}
+    raw: string;           // Texto raw completo incluyendo {...}
     start: number;         // Posición de inicio en el string
     end: number;           // Posición de fin en el string
-}
+};
 
 /**
  * Parser de tags XML/inline en comentarios de documentación

@@ -1,8 +1,6 @@
 import * as vscode from 'vscode';
 
-/**
- * Lenguajes soportados para detección de comentarios
- */
+// Lenguajes soportados para detección de comentarios
 export enum SupportedLanguage {
     JavaScript = 'javascript',
     TypeScript = 'typescript',
@@ -29,47 +27,47 @@ export enum CommentType {
  */
 export enum CustomTag {
     None       = 'none',
-    Important  = '!',  // //!
-    Completed  = '✓',  // //✓
-    Warning    = '?',  // //?
+    Important  = '^',  // //!
+    Completed  = '&',  // //&
+    Warning    = '!',  // //!
     Info       = '@',  // //@
     Debug      = '#',  // //#
     Pending    = '~',  // //~
     Active     = '·',  // //·
-    Conflict   = '^',  // //^
-    Review     = '»',  // //»
+    Conflict   = '%',  // //%
+    Review     = '=',  // //=
     Deprecated = '-',  // //-
-    Error      = '×',  // //×
-    Note       = '*',  // //*
-    Question   = '¿'   // //¿
+    Error      = 'x',  // //x
+    Note       = ':',  // //:
+    Question   = '?'   // //?
 }
 
 /**
  * Representa un comentario detectado en el código
  */
-export interface DetectedComment {
-    range                : vscode.Range;       // Rango del comentario en el documento
+export type DetectedComment = {
+    range                : vscode.Range;      // Rango del comentario en el documento
     content              : string;            // Contenido del comentario sin los delimitadores
     type                 : CommentType;       // Tipo de comentario
     language             : SupportedLanguage; // Lenguaje del documento
     isAfterCode          : boolean;           // Indica si el comentario está después de código (inline)
     customTag?           : CustomTag;         // Tag personalizado para comentarios de línea
     isDocumentation?     : boolean;           // Indica si es un comentario de documentación JSDoc/etc
-}
+};
 
 /**
  * Patrones de comentarios por lenguaje
  */
-export interface CommentPatterns {
+export type CommentPatterns = {
     singleLine            : string; // Patrón para comentarios de una línea (ej: //, #)
     multiLineStart        : string; // Patrón para inicio de comentario multilínea (ej: slash-star, """)
     multiLineEnd          : string; // Patrón para fin de comentario multilínea (ej: star-slash, """)
-}
+};
 
 /**
  * Configuración de estilos para las cajas de comentarios con CSS puro
  */
-export interface DecorationStyle {
+export type DecorationStyle = {
     // Colores básicos
     backgroundColor         : string; // Color de fondo de la caja
     textColor               : string; // Color del texto
@@ -115,15 +113,15 @@ export interface DecorationStyle {
         borderColor     : string;
         textColor       : string;
     };
-}
+};
 
 /**
  * Configuración completa de la extensión
  */
-export interface KaiEditorConfig {
+export type KaiEditorConfig = {
     enabled          : boolean;             // Indica si la extensión está habilitada
     enabledLanguages : SupportedLanguage[]; // Lenguajes habilitados para transformación
     decorationStyle  : DecorationStyle;     // Estilo de decoración unificado para todos los comentarios
     showIcons        : boolean;             // Mostrar iconos antes de comentarios con tags
     iconSize         : number;              // Tamaño de los iconos en píxeles (fijo: 16px)
-}
+};
