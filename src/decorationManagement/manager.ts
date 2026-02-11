@@ -1,13 +1,13 @@
-import * as vscode from 'vscode';
+import * as vscode                      from 'vscode';
 import { DetectedComment, CommentType } from '../types';
-import { ConfigManager } from '../configManager';
-import { DecorationTypeFactory } from './decorationTypeFactory';
-import { InlineDecorationApplier } from './inlineDecorationApplier';
-import { BlockDecorationApplier } from './blockDecorationApplier';
+import { ConfigManager }                from '../configManager';
+import { DecorationTypeFactory }        from './decorationTypeFactory';
+import { InlineDecorationApplier }      from './inlineDecorationApplier';
+import { BlockDecorationApplier }       from './blockDecorationApplier';
 
 /**
  * Gestor principal de decoraciones visuales para comentarios
- * Transforma comentarios en cajas visuales estilizadas con CSS puro
+ * Transforma comentarios en cajas visuales estilizadas con CSS
  */
 export class DecorationManager {
     private configManager: ConfigManager;
@@ -22,34 +22,34 @@ export class DecorationManager {
 
     /**
      * Aplica decoraciones a todos los comentarios detectados
+     * Los comentarios están siempre decorados/ocultos EXCEPTO en la línea donde está el cursor
      * @param editor Editor de texto
      * @param comments Comentarios detectados
-     * @param selection Selección actual del editor (opcional)
      */
     public applyDecorations(
         editor: vscode.TextEditor,
-        comments: DetectedComment[],
-        selection?: vscode.Selection
+        comments: DetectedComment[]
     ): void {
-        // Limpiar decoraciones anteriores PRIMERO
         const documentUri = editor.document.uri.toString();
-        this.clearDecorations(documentUri);
+        
+        // Guardar decoraciones antiguas para mantenerlas visibles durante la transición
+        const oldDecorations = this.activeDecorations.get(documentUri);
 
         if (comments.length === 0) {
+            this.clearDecorations(documentUri);
             return;
         }
 
-        // Filtrar comentarios donde NO está el cursor ni hay selección
-        // Si el cursor está en cualquier línea que contiene el comentario, no decorar
-        const commentsToDecorate = selection 
-            ? comments.filter(comment => {
-                const cursorLine = selection.active.line;
-                const commentStartLine = comment.range.start.line;
-                const commentEndLine = comment.range.end.line;
-                // No decorar si el cursor está en alguna línea del comentario
-                return cursorLine < commentStartLine || cursorLine > commentEndLine;
-            })
-            : comments;
+        // Filtrar comentarios donde NO está el cursor
+        // Si el cursor está en cualquier línea que contiene el comentario, mostrar el original (no decorar)
+        // Esto hace que los comentarios estén siempre decorados/ocultos EXCEPTO en la línea actual
+        const cursorLine = editor.selection.active.line;
+        const commentsToDecorate = comments.filter(comment => {
+            const commentStartLine = comment.range.start.line;
+            const commentEndLine = comment.range.end.line;
+            // No decorar si el cursor está en alguna línea del comentario
+            return cursorLine < commentStartLine || cursorLine > commentEndLine;
+        });
 
         // Agrupar comentarios por tipo
         const singleLineComments = commentsToDecorate.filter(c => c.type === CommentType.SingleLine && !c.isAfterCode);
@@ -57,11 +57,10 @@ export class DecorationManager {
         const inlineComments = commentsToDecorate.filter(c => c.type === CommentType.Inline || c.isAfterCode);
 
         const decorations: vscode.TextEditorDecorationType[] = [];
-        const style = this.configManager.getConfig().decorationStyle;
 
         // Aplicar decoraciones para comentarios inline
         if (inlineComments.length > 0) {
-            const decoration = InlineDecorationApplier.apply(editor, inlineComments, style, this.decorationFactory, this.configManager);
+            const decoration = InlineDecorationApplier.apply(editor, inlineComments, this.decorationFactory, this.configManager);
             if (decoration) {
                 decorations.push(decoration);
             }
@@ -69,7 +68,7 @@ export class DecorationManager {
 
         // Aplicar decoraciones para comentarios de línea
         if (singleLineComments.length > 0) {
-            const decoration = InlineDecorationApplier.apply(editor, singleLineComments, style, this.decorationFactory, this.configManager);
+            const decoration = InlineDecorationApplier.apply(editor, singleLineComments, this.decorationFactory, this.configManager);
             if (decoration) {
                 decorations.push(decoration);
             }
@@ -77,11 +76,26 @@ export class DecorationManager {
 
         // Aplicar decoraciones para bloques (incluye Documentation)
         if (multiLineComments.length > 0) {
-            const blockDecorations = BlockDecorationApplier.apply(editor, multiLineComments, style, this.decorationFactory, this.configManager);
+            const blockDecorations = BlockDecorationApplier.apply(editor, multiLineComments, this.decorationFactory, this.configManager);
             decorations.push(...blockDecorations);
         }
 
-        this.activeDecorations.set(editor.document.uri.toString(), decorations);
+        // Guardar nuevas decoraciones
+        this.activeDecorations.set(documentUri, decorations);
+
+        // Limpiar decoraciones antiguas de forma sincrónica
+        // Primero clearear del editor (sincrónico), luego dispose (async-safe)
+        if (oldDecorations) {
+            oldDecorations.forEach(decoration => {
+                try {
+                    // Clear sincrónico previene duplicación visual en 1 frame
+                    editor.setDecorations(decoration, []);
+                    decoration.dispose();
+                } catch (e) {
+                    console.warn('[KaiEditor] Warning disposing old decoration:', e);
+                }
+            });
+        }
     }
 
     /**

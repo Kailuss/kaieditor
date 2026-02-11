@@ -1,10 +1,10 @@
 import * as vscode from 'vscode';
-import { DetectedComment, DecorationStyle, CustomTag } from '../types';
+import { DetectedComment, CustomTag } from '../types';
 import { TextCleaner } from './textCleaner';
-import { ColorManager } from './colorManager';
 import { DecorationTypeFactory } from './decorationTypeFactory';
 import { getIconUri } from './iconManager';
 import { ConfigManager } from '../configManager';
+import { StyleManager } from './styleManager';
 
 /**
  * Aplicador de decoraciones para bloques multilínea
@@ -14,7 +14,6 @@ export class BlockDecorationApplier {
      * Aplica decoraciones para bloques multilínea
      * @param editor Editor de texto
      * @param comments Comentarios a decorar
-     * @param style Estilo de decoración
      * @param factory Factory de tipos de decoración
      * @param configManager Gestor de configuración
      * @returns Array de tipos de decoración aplicados
@@ -22,7 +21,6 @@ export class BlockDecorationApplier {
     public static apply(
         editor   : vscode.TextEditor,
         comments : DetectedComment[],
-        style    : DecorationStyle,
         factory  : DecorationTypeFactory,
         configManager: ConfigManager
     ): vscode.TextEditorDecorationType[] {
@@ -30,11 +28,14 @@ export class BlockDecorationApplier {
         const textDecorations       : vscode.DecorationOptions[] = [];
         const hideDecorations       : vscode.DecorationOptions[] = [];
         const iconDecorations       : vscode.DecorationOptions[] = [];
+        
+        const styleManager = configManager.getStyleManager();
+        const blockStyles = styleManager.getBlockStyles();
 
         comments.forEach(comment => {
             // Obtener colores según si es documentación
             const isDocumentation = comment.isDocumentation || false;
-            const colors = ColorManager.getColors(style, isDocumentation, comment.customTag);
+            const colors = styleManager.getColors(isDocumentation, comment.customTag);
 
             // Obtener el texto del comentario del editor
             const fullText = editor.document.getText(comment.range);
@@ -54,9 +55,9 @@ export class BlockDecorationApplier {
             const estimatedWidthCh = maxWidth + 4; // +4 para padding visual
 
             // Calcular padding izquierdo si hay icono
-            const hasIcon = configManager.showIcons() && comment.customTag && comment.customTag !== CustomTag.None;
+            const hasIcon = !!(configManager.showIcons() && comment.customTag && comment.customTag !== CustomTag.None);
             const iconSize = configManager.getIconSize();
-            const leftPadding = hasIcon ? iconSize + 8 : style.paddingHorizontal;
+            const leftPadding = hasIcon ? iconSize + 8 : blockStyles.paddingHorizontal;
 
             // Crear decoración de fondo en la PRIMERA línea (para que se dibuje desde arriba)
             const firstLineEnd = new vscode.Position(
@@ -68,7 +69,8 @@ export class BlockDecorationApplier {
             if (hasIcon) {
                 const iconUri = getIconUri(comment.customTag!, colors.textColor, iconSize);
                 if (iconUri) {
-                    const iconMargin = configManager.getCalculatedIconMargin(true);
+                    const iconMargin = styleManager.getIconMargin(true);
+                    const iconCSS = styleManager.buildIconCSS(true);
                     iconDecorations.push({
                         range: new vscode.Range(comment.range.start, firstLineEnd),
                         renderOptions: {
@@ -77,7 +79,7 @@ export class BlockDecorationApplier {
                                 width: `${iconSize}px`,
                                 height: `${iconSize}px`,
                                 margin: iconMargin,
-                                textDecoration: `none; display: inline-flex; align-items: center; vertical-align: middle; position: absolute; z-index: 1; padding-left: 0.2em; padding-top: 0.2em;`
+                                textDecoration: iconCSS
                             }
                         }
                     });
@@ -111,6 +113,9 @@ export class BlockDecorationApplier {
                 }
 
                 // Crear decoración de texto sin bordes ni fondo
+                const isFirstLine = i === 0;
+                const blockCSS = styleManager.buildBlockCSS(isFirstLine);
+                
                 textDecorations.push({
                     range: new vscode.Range(
                         new vscode.Position(lineNumber, commentStart),
@@ -120,9 +125,9 @@ export class BlockDecorationApplier {
                         after: {
                             contentText: cleanedLine,
                             color: colors.textColor,
-                            fontStyle: style.fontStyle,
-                            fontWeight: style.fontWeight,
-                            textDecoration: `none; display: block; opacity: ${style.opacity}; font-size: ${style.blockFontSize}; margin: 0px 0px 0px ${style.paddingHorizontal + 11}px; line-height: 1.3; position: relative; top: ${i === 0 ? '0.2em' : '0'};`
+                            fontStyle: blockStyles.fontStyle,
+                            fontWeight: blockStyles.fontWeight,
+                            textDecoration: blockCSS
                         }
                     }
                 });

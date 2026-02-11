@@ -1,10 +1,10 @@
 import * as vscode from 'vscode';
-import { DetectedComment, DecorationStyle, CustomTag } from '../types';
+import { DetectedComment, CustomTag } from '../types';
 import { TextCleaner } from './textCleaner';
-import { ColorManager } from './colorManager';
 import { DecorationTypeFactory } from './decorationTypeFactory';
 import { getIconUri } from './iconManager';
 import { ConfigManager } from '../configManager';
+import { StyleManager } from './styleManager';
 
 /**
  * Aplicador de decoraciones inline
@@ -14,7 +14,6 @@ export class InlineDecorationApplier {
      * Aplica decoraciones inline (comentarios después de código o de línea)
      * @param editor Editor de texto
      * @param comments Comentarios a decorar
-     * @param style Estilo de decoración
      * @param factory Factory de tipos de decoración
      * @param configManager Gestor de configuración
      * @returns Tipo de decoración aplicado o null
@@ -22,11 +21,12 @@ export class InlineDecorationApplier {
     public static apply(
         editor: vscode.TextEditor,
         comments: DetectedComment[],
-        style: DecorationStyle,
         factory: DecorationTypeFactory,
         configManager: ConfigManager
     ): vscode.TextEditorDecorationType | null {
         const decorations: vscode.DecorationOptions[] = [];
+        const styleManager = configManager.getStyleManager();
+        const inlineStyles = styleManager.getInlineStyles();
 
         comments.forEach(comment => {
             const cleanText = TextCleaner.cleanCommentText(comment.content);
@@ -34,21 +34,22 @@ export class InlineDecorationApplier {
 
             // Obtener colores según tipo y custom tag
             const isDocumentation = comment.isDocumentation || false;
-            const colors = ColorManager.getColors(style, isDocumentation, comment.customTag);
+            const colors = styleManager.getColors(isDocumentation, comment.customTag);
 
             // Preparar opciones de renderizado base
-            const hasIcon = configManager.showIcons() && comment.customTag && comment.customTag !== CustomTag.None;
+            const hasIcon = !!(configManager.showIcons() && comment.customTag && comment.customTag !== CustomTag.None);
             const iconSize = configManager.getIconSize();
-            const leftPadding = hasIcon ? iconSize + 16 : style.paddingHorizontal; // Espacio para icono + margen
+            
+            // Build CSS using StyleManager
+            const inlineCSS = styleManager.buildInlineCSS(hasIcon, colors.backgroundColor);
 
             const renderOptions: any = {
                 after: {
                     contentText: formattedText,
-                    backgroundColor: colors.backgroundColor,
                     color: colors.textColor,
-                    fontStyle: style.fontStyle,
-                    fontWeight: style.fontWeight,
-                    textDecoration: `none; display: inline-block; border-radius: ${style.borderRadius}px; padding: ${style.inlinePaddingTop} ${style.paddingHorizontal}px ${style.inlinePaddingBottom} ${leftPadding}px; opacity: ${style.opacity}; font-size: ${style.inlineFontSize}; transition: opacity 0.3s; vertical-align: middle; margin: 0px; line-height: normal;`
+                    fontStyle: inlineStyles.fontStyle,
+                    fontWeight: inlineStyles.fontWeight,
+                    textDecoration: inlineCSS
                 }
             };
 
@@ -56,20 +57,20 @@ export class InlineDecorationApplier {
             if (hasIcon) {
                 const iconUri = getIconUri(comment.customTag!, colors.textColor, iconSize);
                 if (iconUri) {
-                    const iconMargin = configManager.getCalculatedIconMargin(false);
+                    const iconMargin = styleManager.getIconMargin(false);
+                    const iconCSS = styleManager.buildIconCSS(false);
                     renderOptions.before = {
                         contentIconPath : iconUri,
                         width           : `${iconSize}px`,
                         height          : `${iconSize}px`,
                         margin          : iconMargin,
-                        textDecoration  : `none; display: inline-flex; align-items: center; vertical-align: middle; position: absolute; z-index: 1; padding-left: 10px;`
+                        textDecoration  : iconCSS
                     };
                 }
             }
 
             decorations.push({
                 range: comment.range,
-                hoverMessage: '**Original Comment**\n```\n' + editor.document.getText(comment.range) + '\n```',
                 renderOptions
             });
         });

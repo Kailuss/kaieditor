@@ -1,5 +1,7 @@
+
 import * as vscode from 'vscode';
 import { KaiEditorConfig, SupportedLanguage, DecorationStyle } from './types';
+import { StyleManager } from './decorationManagement/styleManager';
 
 /**
  * Gestor de configuración de la extensión
@@ -8,9 +10,12 @@ import { KaiEditorConfig, SupportedLanguage, DecorationStyle } from './types';
 export class ConfigManager {
     private static readonly CONFIG_SECTION = 'kaieditor';
     private config: KaiEditorConfig;
+    private styleManager: StyleManager;
 
     constructor() {
         this.config = this.loadConfig();
+        const vsConfig = vscode.workspace.getConfiguration(ConfigManager.CONFIG_SECTION);
+        this.styleManager = new StyleManager(vsConfig);
     }
 
     /**
@@ -47,7 +52,7 @@ export class ConfigManager {
             borderColor            : '#4c566a00',
             accentColor            : '#3399ffdd',
             borderRadius           : 16,
-            paddingVertical        : 3,
+            paddingVertical        : 4,
             paddingHorizontal      : 10,
             fontStyle              : 'normal',
             fontWeight             : '500',
@@ -89,7 +94,11 @@ export class ConfigManager {
     /**
      * Recarga la configuración (útil cuando el usuario cambia settings)
      */
-    public reloadConfig(): void { this.config = this.loadConfig();
+    public reloadConfig(): void { 
+        this.config = this.loadConfig();
+        const vsConfig = vscode.workspace.getConfiguration(ConfigManager.CONFIG_SECTION);
+        this.styleManager = new StyleManager(vsConfig);
+        this.styleManager.clearCache();
     }
 
     /**
@@ -108,8 +117,16 @@ export class ConfigManager {
 
     /**
      * Obtiene el estilo de decoración actual
+     * @deprecated Use getStyleManager() instead for better separation of concerns
      */
     public getDecorationStyle(): DecorationStyle { return this.config.decorationStyle; }
+
+    /**
+     * Obtiene el StyleManager que centraliza toda la configuración visual
+     */
+    public getStyleManager(): StyleManager {
+        return this.styleManager;
+    }
 
     /**
      * Verifica si los iconos están habilitados

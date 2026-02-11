@@ -63,16 +63,17 @@ export function activate(context: vscode.ExtensionContext) {
 				updateTimeout = setTimeout(() => {
 					console.log('[KaiEditor] Document changed, updating decorations');
 					updateDecorations(editor);
-				}, 300); // 300ms de debounce
+				}, 150); // 150ms de debounce - respuesta más rápida
 			}
 		})
 	);
 
-	// Actualizar decoraciones cuando cambia la selección/cursor
+	// Actualizar decoraciones cuando cambia la selección/cursor (sin debounce para respuesta instantánea)
 	context.subscriptions.push(
 		vscode.window.onDidChangeTextEditorSelection(event => {
 			if (event.textEditor === vscode.window.activeTextEditor) {
-				// Actualizar decoraciones basado en la posición del cursor
+				// Sin debounce: cursor movements deben actualizar decoraciones inmediatamente
+				// Esto previene lag visual y duplicación de decoraciones
 				updateDecorations(event.textEditor);
 			}
 		})
@@ -159,11 +160,8 @@ function updateDecorations(editor: vscode.TextEditor): void {
 	const comments = commentDetector.detectComments(editor.document);
 	console.log(`[KaiEditor] 📊 Detected ${comments.length} comments`);
 
-	// Obtener selección actual (incluye cursor y rango seleccionado)
-	const selection = editor.selection;
-
-	// Aplicar decoraciones (excluyendo comentarios donde está el cursor o hay selección)
-	decorationManager.applyDecorations(editor, comments, selection);
+	// Aplicar decoraciones (excluye automáticamente comentarios en la línea del cursor)
+	decorationManager.applyDecorations(editor, comments);
 	console.log('[KaiEditor] ✨ Decorations applied successfully');
 }
 
