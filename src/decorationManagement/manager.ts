@@ -31,7 +31,7 @@ export class DecorationManager {
         comments: DetectedComment[]
     ): void {
         const documentUri = editor.document.uri.toString();
-        
+
         // Guardar decoraciones antiguas para mantenerlas visibles durante la transición
         const oldDecorations = this.activeDecorations.get(documentUri);
 
@@ -43,10 +43,10 @@ export class DecorationManager {
         // Filtrar comentarios donde NO está el cursor
         // Si el cursor está en cualquier línea que contiene el comentario, mostrar el original (no decorar)
         // Esto hace que los comentarios estén siempre decorados/ocultos EXCEPTO en la línea actual
-        const cursorLine = editor.selection.active.line;
+        const cursorLine         = editor.selection.active.line;
         const commentsToDecorate = comments.filter(comment => {
             const commentStartLine = comment.range.start.line;
-            const commentEndLine = comment.range.end.line;
+            const commentEndLine   = comment.range.end.line;
             // No decorar si el cursor está en alguna línea del comentario
             return cursorLine < commentStartLine || cursorLine > commentEndLine;
         });

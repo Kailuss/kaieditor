@@ -1,10 +1,9 @@
-import * as vscode from 'vscode';
-import { DetectedComment, CustomTag } from '../types';
-import { TextCleaner } from './textCleaner';
-import { DecorationTypeFactory } from './decorationTypeFactory';
-import { getIconUri } from './iconManager';
-import { ConfigManager } from '../configManager';
-import { StyleManager } from './styleManager';
+import * as vscode                    from 'vscode'                 ;
+import { DetectedComment, CustomTag } from '../types'               ;
+import { TextCleaner                } from './textCleaner'          ;
+import { DecorationTypeFactory      } from './decorationTypeFactory';
+import { getIconUri                 } from './iconManager'          ;
+import { ConfigManager              } from '../configManager'       ;
 
 /**
  * Aplicador de decoraciones inline
@@ -19,41 +18,39 @@ export class InlineDecorationApplier {
      * @returns Tipo de decoración aplicado o null
      */
     public static apply(
-        editor: vscode.TextEditor,
-        comments: DetectedComment[],
-        factory: DecorationTypeFactory,
-        configManager: ConfigManager
+        editor        : vscode.TextEditor,
+        comments      : DetectedComment[],
+        factory       : DecorationTypeFactory,
+        configManager : ConfigManager
     ): vscode.TextEditorDecorationType | null {
         const decorations: vscode.DecorationOptions[] = [];
         const styleManager = configManager.getStyleManager();
         const inlineStyles = styleManager.getInlineStyles();
 
         comments.forEach(comment => {
-            const cleanText = TextCleaner.cleanCommentText(comment.content);
-            const formattedText = TextCleaner.formatLongText(cleanText);
 
-            // Obtener colores según tipo y custom tag
+            const cleanText       = TextCleaner.cleanCommentText(comment.content);
+            const formattedText   = TextCleaner.formatLongText(cleanText);
+            // Obtiene colores según tipo y custom tag
             const isDocumentation = comment.isDocumentation || false;
-            const colors = styleManager.getColors(isDocumentation, comment.customTag);
-
-            // Preparar opciones de renderizado base
-            const hasIcon = !!(configManager.showIcons() && comment.customTag && comment.customTag !== CustomTag.None);
-            const iconSize = configManager.getIconSize();
-            
-            // Build CSS using StyleManager
-            const inlineCSS = styleManager.buildInlineCSS(hasIcon, colors.backgroundColor);
+            const colors          = styleManager.getColors(isDocumentation, comment.customTag);
+            // Prepara opciones de renderizado base
+            const hasIcon         = !!(configManager.showIcons() && comment.customTag && comment.customTag !== CustomTag.None);
+            const iconSize        = configManager.getIconSize();
+            // Construye CSS usando StyleManager
+            const inlineCSS       = styleManager.buildInlineCSS(hasIcon, colors.backgroundColor);
 
             const renderOptions: any = {
                 after: {
-                    contentText: formattedText,
-                    color: colors.textColor,
-                    fontStyle: inlineStyles.fontStyle,
-                    fontWeight: inlineStyles.fontWeight,
-                    textDecoration: inlineCSS
+                    contentText    : formattedText,
+                    color          : colors.textColor,
+                    fontStyle      : inlineStyles.fontStyle,
+                    fontWeight     : inlineStyles.fontWeight,
+                    textDecoration : inlineCSS
                 }
             };
 
-            // Añadir icono si está habilitado y el comentario tiene custom tag
+            // Añade icono si está habilitado y el comentario tiene custom tag
             if (hasIcon) {
                 const iconUri = getIconUri(comment.customTag!, colors.textColor, iconSize);
                 if (iconUri) {
@@ -75,9 +72,7 @@ export class InlineDecorationApplier {
             });
         });
 
-        if (decorations.length === 0) {
-            return null;
-        }
+        if (decorations.length === 0) { return null; }
 
         const decorationType = factory.createInlineDecoration();
         editor.setDecorations(decorationType, decorations);
