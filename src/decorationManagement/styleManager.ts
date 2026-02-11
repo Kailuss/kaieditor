@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
-import { InlineStyleConfig } from './styles/inlineStyles';
-import { BlockStyleConfig } from './styles/blockStyles';
+import { InlineStyleConfig }                            from './styles/inlineStyles';
+import { BlockStyleConfig }                             from './styles/blockStyles';
 import { BaseStyleConfig, TagColorMap, DocColorConfig } from './styles/baseStyles';
-import { CustomTag } from '../types';
+import { CustomTag }                                    from '../types';
 
 /**
  * Color result for a decoration
@@ -153,11 +153,21 @@ export class StyleManager {
 
         if (this.cssCache.has(cacheKey)) { return this.cssCache.get(cacheKey)!; }
 
-        const style = this.inlineStyles;
+        const style       = this.inlineStyles;
         const leftPadding = hasIcon ? 16 + 16 : style.paddingHorizontal; // Icon size + margin
-        const bgColor = tagColor || style.backgroundColor;
+        const bgColor     = tagColor || style.backgroundColor;
 
-        const css = `none; display: inline-block; border-radius: ${style.borderRadius}px; padding: ${style.paddingTop} ${style.paddingHorizontal}px ${style.paddingBottom} ${leftPadding}px; opacity: ${style.opacity}; font-size: ${style.fontSize}; transition: opacity 0.3s; vertical-align: middle; margin: 0px; line-height: normal; background-color: ${bgColor};`;
+        const css = `none;
+            display          : inline-block;
+            border-radius    : ${style.borderRadius}px;
+            padding          : ${style.paddingTop} ${style.paddingHorizontal}px ${style.paddingBottom} ${leftPadding}px;
+            opacity          : ${style.opacity};
+            font-size        : ${style.fontSize};
+            transition       : opacity 0.3s;
+            vertical-align   : middle;
+            margin           : 0px;
+            line-height      : normal;
+            background-color : ${bgColor};`;
 
         this.cssCache.set(cacheKey, css);
         return css;
@@ -174,7 +184,14 @@ export class StyleManager {
 
         const style     = this.blockStyles;
         const topOffset = isFirstLine ? '0.2em' : '0';
-        const css       = `none; display: block; opacity: ${style.opacity}; font-size: ${style.fontSize}; margin: 0px 0px 0px ${style.paddingHorizontal + 11}px; line-height: 1.3; position: relative; top: ${topOffset};`;
+        const css       = `none; 
+            display        : block;
+            opacity        : ${style.opacity};
+            font-size      : ${style.fontSize};
+            margin         : 0px 0px 0px ${style.paddingHorizontal + 11}px;
+            line-height    : 1.3;
+            position       : relative;
+            top            : ${topOffset};`;
 
         this.cssCache.set(cacheKey, css);
         return css;
@@ -192,7 +209,14 @@ export class StyleManager {
         const paddingLeft = isBlock ? '0.2em' : '10px';
         const paddingTop  = isBlock ? '0.2em' : '0';
 
-        const css = `none; display: inline-flex; align-items: center; vertical-align: middle; position: absolute; z-index: 1; padding-left: ${paddingLeft}; padding-top: ${paddingTop};`;
+        const css = `none;
+            display        : inline-flex;
+            align-items    : center;
+            vertical-align : middle;
+            position       : absolute;
+            z-index        : 1;
+            padding-left   : ${paddingLeft};
+            padding-top    : ${paddingTop};`;
 
         this.cssCache.set(cacheKey, css);
         return css;
@@ -248,7 +272,8 @@ export class StyleManager {
         };
 
         const colorKey = tagMap[tag];
-        return colorKey ? this.inlineStyles.tagColors[colorKey] : this.inlineStyles.backgroundColor;
+        return colorKey ? this.inlineStyles.tagColors[colorKey]
+                        : this.inlineStyles.backgroundColor;
     }
 
     /**
