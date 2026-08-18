@@ -16,10 +16,6 @@
   "contributes": {
     "commands": [
       {
-        "command": "kaieditor.helloWorld",
-        "title": "KaiEditor: Hello World"
-      },
-      {
         "command": "kaieditor.toggle",
         "title": "KaiEditor: Toggle Comment Boxes"
       },
@@ -38,11 +34,22 @@
         },
         "kaieditor.enabledLanguages": {
           "type": "array",
-          "default": ["javascript", "typescript", "python", "rust", "go"],
+          "default": ["javascript", "typescript", "python", "rust", "go", "csharp", "java", "php"],
           "description": "List of languages where comment boxes will be shown",
           "items": {
-            "type": "string"
+            "type": "string",
+            "enum": ["javascript", "typescript", "python", "rust", "go", "csharp", "java", "php"]
           }
+        },
+        "kaieditor.showIcons": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show icons before comments with custom tags (//!, //?, etc.)"
+        },
+        "kaieditor.decorationStyle": {
+          "type": "object",
+          "description": "Visual style overrides for comment decorations (colors, padding, fonts, tag colors)",
+          "additionalProperties": true
         }
       }
     }
