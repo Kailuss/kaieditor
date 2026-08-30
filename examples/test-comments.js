@@ -80,13 +80,13 @@ async function processData(input, options) {
     if (!input) throw new Error('Input required');
     //! Validar input antes de procesar
     if (!input) throw new Error('Input required');
-    
+
     //✓ Validación implementada
     const validated = validate(input);
-    
+
     //? Verificar si options es necesario
     const config = options || getDefaultOptions();
-    
+
     return validated;
 }
 
@@ -99,11 +99,11 @@ class ExampleClass {
     constructor() {
         //@ Inicialización por defecto
         this.data = {};
-        
+
         //# Solo para debugging
         this.debugInfo = Date.now();
     }
-    
+
     /**
      * Método de ejemplo
      * @returns {boolean} Estado de operación
